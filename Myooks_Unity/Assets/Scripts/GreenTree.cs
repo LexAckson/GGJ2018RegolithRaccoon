@@ -11,8 +11,9 @@ public class GreenTree : MonoBehaviour {
 	
 	public int _toxins;
 	[SerializeField]
-	private Dictionary<string, GameObject> _resourcePrefabs;
-	public Dictionary<Type , Queue<Resource>> _resources;
+	private List<ResourcePrefab> _resourcePrefabsList;
+    private Dictionary<string, GameObject> _resourcePrefabs;
+    public Dictionary<Type , Queue<Resource>> _resources;
 
 	private bool _inSun;
 	private float _sunTimer;
@@ -20,6 +21,10 @@ public class GreenTree : MonoBehaviour {
 	void Start () 
 	{
 		_resources = new Dictionary<Type , Queue<Resource>>();
+        _resourcePrefabs = new Dictionary<string, GameObject>();
+        foreach(ResourcePrefab r in _resourcePrefabsList) {
+            _resourcePrefabs.Add(r.name, r.stuff);
+        }
 		StartCoroutine(LeafRegrowCheck());
 	}
 	
@@ -97,4 +102,11 @@ public class GreenTree : MonoBehaviour {
 			_inSun = false;
 		}
 	}
+}
+
+
+[Serializable]
+public struct ResourcePrefab {
+    public string name;
+    public GameObject stuff;
 }

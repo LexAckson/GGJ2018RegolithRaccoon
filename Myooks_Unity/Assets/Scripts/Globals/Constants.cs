@@ -12,7 +12,7 @@ public static class Constants
 	public const KeyCode MOVE_RIGHT = KeyCode.D;
 	public const KeyCode PIN_DROP = KeyCode.Q;
 	// vars
-	public const float MOVE_SPEED = .05f; 
+	public const float MOVE_SPEED = .2f; 
 	public const int NEEDLE_COUNT = 3;
 
 	/// TREE CONSTS ///

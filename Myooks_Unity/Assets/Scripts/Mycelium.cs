@@ -14,7 +14,7 @@ public class Mycelium : MonoBehaviour {
     public string mycelium_layer;
     private bool alive = true;
 
-    private void Init(GameObject start, GameObject end)
+    public void Init(GameObject start, GameObject end)
     {
         startObject = start;
         endObject = end;
@@ -43,13 +43,13 @@ public class Mycelium : MonoBehaviour {
         //    //we want to place our piece 1/(numOfPart + 1) of the way from start to end
         //    Vector3 pos = i * (startObject.transform.position - endObject.transform.position) / ((numberOfParticles + 1) * 1.0f);
         //    myceliumDots.Add(Instantiate(myceliumParticle, pos, Quaternion.identity));
-        //    myceliumDots[i].GetComponent<Thread>().surfaceTensioner.connectedBody = myceliumDots[i - 1].GetComponent<Rigidbody2D>();
+        //    myceliumDots[i].GetComponent<Thread>().surfaceTensioner.connectedBody = myceliumDots[i - 1].GetComponent<Rigidbody>();
         //    myceliumDots[i].layer = LayerMask.NameToLayer(mycelium_layer);
         //    myceliumDots[i].transform.parent = gameObject.transform;
         //}
         ////link the first and last surfaceTensioners to the start/end objects
-        //myceliumDots[0].GetComponent<Thread>().surfaceTensioner.connectedBody = startObject.GetComponent<Rigidbody2D>();
-        //endObject.GetComponent<Thread>().surfaceTensioner.connectedBody = myceliumDots[numberOfParticles].GetComponent<Rigidbody2D>();
+        //myceliumDots[0].GetComponent<Thread>().surfaceTensioner.connectedBody = startObject.GetComponent<Rigidbody>();
+        //endObject.GetComponent<Thread>().surfaceTensioner.connectedBody = myceliumDots[numberOfParticles].GetComponent<Rigidbody>();
     }
 
     // Update is called once per frame
@@ -67,15 +67,15 @@ public class Mycelium : MonoBehaviour {
     private void DrawMycelium()
     {
         //start the line
-        lineRenderer.SetPosition(0, startObject.GetComponent<Rigidbody2D>().position);
+        lineRenderer.SetPosition(0, startObject.GetComponent<Rigidbody>().position);
         //line position 1 is our first dot
         for (int i = 1; i < numberOfParticles + 1; i++)
         {
             //draw our surface line
-            lineRenderer.SetPosition(i, myceliumDots[i].GetComponent<Rigidbody2D>().position);
+            lineRenderer.SetPosition(i, myceliumDots[i].GetComponent<Rigidbody>().position);
         }
         //connect the last dot to the end
-        lineRenderer.SetPosition(numberOfParticles + 1, endObject.GetComponent<Rigidbody2D>().position);
+        lineRenderer.SetPosition(numberOfParticles + 1, endObject.GetComponent<Rigidbody>().position);
     }
 
     public void GrowMycelium()

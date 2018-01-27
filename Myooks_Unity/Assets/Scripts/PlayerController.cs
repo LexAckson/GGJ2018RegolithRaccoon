@@ -9,32 +9,37 @@ public class PlayerController : MonoBehaviour {
 	[SerializeField]
 	private GameObject _ground;
 	[SerializeField]
-	private GameObject _threadPrefab;
+	private GameObject _myceliumPrefab;
 
 	private bool _isTouchingTree;
 	private GameObject _currentTree;
 	private Mycelium _currentThread;
 	private bool _isMycelliumMode;
 	private int _numPins = Constants.NEEDLE_COUNT;
-	
-	void Update () {
+
+    private void Start()
+    {
+        _dude = gameObject;
+    }
+
+    void Update () {
 		if(Input.GetAxis(Constants.HORIZONTAL_AXIS) < 0)
 			_dude.transform.RotateAround(_ground.transform.position, Vector3.up, -Constants.MOVE_SPEED);
 	
 		if(Input.GetAxis(Constants.HORIZONTAL_AXIS) > 0)
 			_dude.transform.RotateAround(_ground.transform.position, Vector3.up, Constants.MOVE_SPEED);
 	
-		if(isPointingIn(new Vector3(Input.GetAxis(Constants.HORIZONTAL_AXIS), 0, Input.GetAxis(Constants.VERTICAL_AXIS))))
-		{
-			_dude.transform.Translate((_dude.transform.position - _ground.transform.position).normalized * Constants.MOVE_SPEED);
-		}
+		//if(isPointingIn(new Vector3(Input.GetAxis(Constants.HORIZONTAL_AXIS), 0, Input.GetAxis(Constants.VERTICAL_AXIS))))
+		//{
+		//	_dude.transform.Translate((_dude.transform.position - _ground.transform.position).normalized * Constants.MOVE_SPEED);
+		//}
 
 		if(_isTouchingTree && _numPins > 0 && Input.GetKeyDown(Constants.PIN_DROP))
 		{
 			if(!_isMycelliumMode)
 			{
-				_currentThread = Instantiate(_threadPrefab, _currentTree.transform).GetComponent<Mycelium>();
-				_currentThread.startObject = _currentTree;
+				_currentThread = Instantiate(_myceliumPrefab, _currentTree.transform).GetComponent<Mycelium>();
+				_currentThread.Init(_currentTree, _dude);
 				_isMycelliumMode = true;
 			}
 
