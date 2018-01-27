@@ -278,7 +278,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 6
   jumpSpeed: 8
-  gravity: 100
+  gravity: 10
 --- !u!143 &1362621151
 CharacterController:
   m_ObjectHideFlags: 0
@@ -500,3 +500,7 @@ MonoBehaviour:
   myPos: {x: 1, y: 1.5, z: -5}
   myPlay: {fileID: 1362621149}
   mainCamera: {fileID: 1973953150}
+  xAxis: 0
+  yAxis: 0
+  xSpeed: 2
+  ySpeed: 2
