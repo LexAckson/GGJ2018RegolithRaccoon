@@ -2,15 +2,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Resource : MonoBehaviour {
+public abstract class Resource : MonoBehaviour {
 
 	public string _name;
 	void Start () {
 		
 	}
 	
-	// Update is called once per frame
-	void Update () {
-		
-	}
+	public abstract void make();
+
+	public abstract void destroy();
 }

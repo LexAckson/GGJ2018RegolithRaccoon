@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System;
 using UnityEngine;
 
 public class Mycelium : MonoBehaviour {
@@ -95,19 +96,20 @@ public class Mycelium : MonoBehaviour {
 
         if (gtEnd != null)
         {
-            //GreenTree gtStart = startObject.GetComponent<GreenTree>();
-            //Dictionary<Types, int> gtStartResourceDict = gtStart.GetResourceNum();
-            //Dictionary<Types, int> gtEndResourceDict = gtEnd.GetResourceNum();
-            //int nutrientDiff = gtStartResourceDict["Nutrients"] - gtEndResourceDict["Nutrients"];
-            //if (nutrientDiff >= 2)
-            //{
-            //    gtStart.TakeResource("Nutrients");
-            //    gtEnd.GiveResource("Nutrients");
-            //} else if (nutrientDiff <= -2)
-            //{
-            //    gtEnd.TakeResource("Nutrients");
-            //    gtStart.GiveResource("Nutrients");
-            //}
+            GreenTree gtStart = startObject.GetComponent<GreenTree>();
+            Dictionary<Type, int> gtStartResourceDict = gtStart.getResourceNum();
+            Dictionary<Type, int> gtEndResourceDict = gtEnd.getResourceNum();
+            int nutrientDiff = gtStartResourceDict[typeof(Nutrient)] - gtEndResourceDict[typeof(Nutrient)];
+            if (nutrientDiff >= 2)
+            {
+                Nutrient nut = gtStart.TakeResource<Nutrient>();
+                gtEnd.GiveResource(nut);
+            } else if (nutrientDiff <= -2)
+            {
+                Nutrient nut = gtEnd.TakeResource<Nutrient>();
+                gtStart.GiveResource(nut);
+            }
+
         }
 
     }
