@@ -28,13 +28,13 @@ public class PlayerController : MonoBehaviour {
 	
 		if(Input.GetAxis(Constants.HORIZONTAL_AXIS) > 0)
 			_dude.transform.RotateAround(_ground.transform.position, Vector3.up, Constants.MOVE_SPEED);
-	
-		//if(isPointingIn(new Vector3(Input.GetAxis(Constants.HORIZONTAL_AXIS), 0, Input.GetAxis(Constants.VERTICAL_AXIS))))
-		//{
-		//	_dude.transform.Translate((_dude.transform.position - _ground.transform.position).normalized * Constants.MOVE_SPEED);
-		//}
 
-		if(_isTouchingTree && _numPins > 0 && Input.GetKeyDown(Constants.PIN_DROP))
+        if (isPointingIn(new Vector3(Input.GetAxis(Constants.HORIZONTAL_AXIS), 0, Input.GetAxis(Constants.VERTICAL_AXIS))))
+        {
+            _dude.transform.Translate((_dude.transform.position - _ground.transform.position).normalized * Constants.MOVE_SPEED);
+        }
+
+        if (_isTouchingTree && _numPins > 0 && Input.GetKeyDown(Constants.PIN_DROP))
 		{
 			if(!_isMycelliumMode)
 			{
