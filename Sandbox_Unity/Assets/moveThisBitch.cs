@@ -8,6 +8,8 @@ public class moveThisBitch : MonoBehaviour {
     public float jumpSpeed = 10.0F;
     public float gravity = 100.0F;
     private Vector3 moveDirection = Vector3.zero;
+    public float xAxis = 0.0F;
+    public float xSpeed = 2.0F;
 
     // Use this for initialization
     void Start () {
@@ -30,8 +32,11 @@ public class moveThisBitch : MonoBehaviour {
             if (Input.GetButton("Jump"))
                 moveDirection.y = jumpSpeed;
         }
-        
 
+        xAxis += xSpeed * Input.GetAxis("Mouse X");
+        
+        //mainCamera.transform.Rotate(new Vector3(Input.GetAxis("Mouse Y"), Input.GetAxis("Mouse X"), 0) * Time.deltaTime * 1.0F);
+        transform.eulerAngles = new Vector3(0, xAxis, 0);
         //Applying gravity to the controller
         moveDirection.y -= gravity * Time.deltaTime;
         //Making the character move
