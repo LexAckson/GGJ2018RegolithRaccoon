@@ -22,6 +22,7 @@ GameObject:
   - component: {fileID: 33149026209981200}
   - component: {fileID: 64729127358967168}
   - component: {fileID: 23437177488870414}
+  - component: {fileID: 114175097397496868}
   m_Layer: 0
   m_Name: Nutrient
   m_TagString: Untagged
@@ -97,3 +98,15 @@ MeshCollider:
   m_CookingOptions: 14
   m_SkinWidth: 0.01
   m_Mesh: {fileID: 10210, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &114175097397496868
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1081899501691794}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8fa4725225f7bce488cdff43686cd7b3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _name: Nutrient
