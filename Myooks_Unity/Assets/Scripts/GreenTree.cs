@@ -11,7 +11,7 @@ public class GreenTree : MonoBehaviour {
 	
 	public int _toxins;
 	[SerializeField]
-	private GameObject _nutrientPrefab;
+	private Dictionary<string, GameObject> _resourcePrefabs;
 	public Dictionary<Type , Queue<Resource>> _resources;
 
 	private bool _inSun;
@@ -33,7 +33,7 @@ public class GreenTree : MonoBehaviour {
 		if(_sunTimer >= Constants.NUTRIENT_MAKE_TIMER)
 		{
 			_sunTimer = 0;
-			makeNutrient();
+			makeResource<Nutrient>();
 		}
 	}
 
@@ -45,29 +45,42 @@ public class GreenTree : MonoBehaviour {
 			if(_leaves < Constants.LEAF_COUNT)
 			{
 				// TODO: do regrow animation
-				//Nutrient toAbsorb = _nutrients.Dequeue();
 				_leaves++;
-				//absorbNutrient(toAbsorb.gameObject);
+				removeResource<Nutrient>();
 			}
 		}
 	}
 
-	private void absorbNutrient(GameObject nutrient)
+	public Dictionary<Type, int> getResourceNum()
 	{
-		Vector3 scale = nutrient.transform.localScale;
-		StartCoroutine(Utility.scaler(nutrient, scale.x, 0, Constants.NUTRIENT_ABSORB_TIME, 
-					() => Destroy(nutrient)));
-		
+		Dictionary<Type, int> countDict = new Dictionary<Type, int>();
+		foreach(Type t in _resources.Keys)
+			countDict.Add(t, _resources[t].Count);
+		return countDict;
 	}
 
-	void makeNutrient()
+	public T TakeResource<T>() where T : Resource
 	{
-		Nutrient nutrient = Instantiate(_nutrientPrefab, transform).GetComponent<Nutrient>();
-		float startScale = nutrient.gameObject.transform.localScale.x;
-		StartCoroutine(Utility.scaler(nutrient.gameObject, startScale, Constants.NUTRIENT_SIZE, Constants.NUTRIENT_MAKE_TIMER,
-			() => _resources[typeof(Nutrient)].Enqueue(nutrient)));
+		return _resources[typeof(T)].Dequeue() as T;
 	}
 
+	public void GiveResource(Resource newResource)
+	{
+		_resources[newResource.GetType()].Enqueue(newResource);
+	}
+
+	private void makeResource<T>() where T : Resource
+	{
+		T newResource = Instantiate(_resourcePrefabs[typeof(T).ToString()]).GetComponent<T>();
+		newResource.make();
+		_resources[typeof(T)].Enqueue(newResource);
+	}
+
+	private void removeResource<T> () where T : Resource
+	{
+		T toRemove = (T) _resources[typeof(T)].Dequeue();
+		toRemove.destroy();
+	}
 
 	private void OnTriggerEnter (Collider other)
 	{

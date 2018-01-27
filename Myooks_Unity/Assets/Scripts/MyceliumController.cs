@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System;
 using UnityEngine;
 
 public class Mycelium : MonoBehaviour {
@@ -91,22 +92,22 @@ public class Mycelium : MonoBehaviour {
     private void BalanceResources()
     {
         //Only trade if the end is a tree
-        GreenTree gtEnd = end.GetComponent<GreenTree>();
+        GreenTree gtEnd = endObject.GetComponent<GreenTree>();
 
         if (gtEnd != null)
         {
-            GreenTree gtStart = start.GetComponent<GreenTree>();
-            Dictionary<Types, int> gtStartResourceDict = gtStart.getResourceNum();
-            Dictionary<Types, int> gtEndResourceDict = gtEnd.getResourceNum();
-            int nutrientDiff = gtStartResourceDict["Nutrients"] - gtEndResourceDict["Nutrients"];
+            GreenTree gtStart = startObject.GetComponent<GreenTree>();
+            Dictionary<Type, int> gtStartResourceDict = gtStart.getResourceNum();
+            Dictionary<Type, int> gtEndResourceDict = gtEnd.getResourceNum();
+            int nutrientDiff = gtStartResourceDict[typeof(Nutrient)] - gtEndResourceDict[typeof(Nutrient)];
             if (nutrientDiff >= 2)
             {
-                gtStart.TakeResource("Nutrients");
-                gtEnd.GiveResource("Nutrients");
+                Nutrient nut = gtStart.TakeResource<Nutrient>();
+                gtEnd.GiveResource(nut);
             } else if (nutrientDiff <= -2)
             {
-                gtEnd.TakeResource("Nutrients");
-                gtStart.GiveResource("Nutrients");
+                Nutrient nut = gtEnd.TakeResource<Nutrient>();
+                gtStart.GiveResource(nut);
             }
         }
 

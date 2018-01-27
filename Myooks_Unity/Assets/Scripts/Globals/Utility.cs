@@ -14,6 +14,7 @@ public static class Utility
 			toScale.transform.localScale = new Vector3(newScale, newScale, newScale);
 			yield return null;			
 		}
-		onComplete.Invoke();
+		if(onComplete != null)
+			onComplete.Invoke();
 	}
 }

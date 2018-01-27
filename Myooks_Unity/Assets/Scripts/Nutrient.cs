@@ -6,11 +6,21 @@ public class Nutrient : Resource {
 
 	// Use this for initialization
 	void Start () {
-		
+		name = "nutrient";
+		gameObject.tag = Tags.NUTRIENT;
 	}
 	
-	// Update is called once per frame
-	void Update () {
-		
+	public override void make()
+	{
+		float startScale = transform.localScale.x;
+		StartCoroutine(Utility.scaler(gameObject, startScale, Constants.NUTRIENT_SIZE, Constants.NUTRIENT_MAKE_TIMER,
+			null));
+	}
+
+	public override void destroy()
+	{
+		float startScale = transform.localScale.x;
+		StartCoroutine(Utility.scaler(gameObject, startScale, 0, Constants.NUTRIENT_ABSORB_TIME, 
+					() => Destroy(gameObject)));
 	}
 }
