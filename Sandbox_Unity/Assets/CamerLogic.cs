@@ -23,7 +23,7 @@ public class CamerLogic : MonoBehaviour {
 
         transform.position = myPlay.position + myPos;
         yAxis -= ySpeed * Input.GetAxis("Mouse Y");
-        xAxis += xSpeed * Input.GetAxis("Mouse X");
+        //xAxis += xSpeed * Input.GetAxis("Mouse X");
 
         //transform.Rotate(new Vector3(yAxis, xAxis, 0));
 
