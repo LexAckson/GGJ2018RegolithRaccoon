@@ -4,29 +4,50 @@ using UnityEngine;
 
 public class CamerLogic : MonoBehaviour {
 
-    public Vector3 myPos;
-    public Transform myPlay;
-    public CharacterController player;
-    public float yAxis = 0.0F;
-    public float ySpeed = 2.0F;
-    public float xAxis = 0.0F;
-    public float xSpeed = 2.0F;
+    [SerializeField]
+    private Transform target;
 
+    [SerializeField]
+    private Vector3 offsetPosition;
 
-    // Use this for initialization
-    void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
+    [SerializeField]
+    private Space offsetPositionSpace = Space.Self;
 
-        transform.position = myPlay.position + myPos;
-        yAxis -= ySpeed * Input.GetAxis("Mouse Y");
-        //xAxis += xSpeed * Input.GetAxis("Mouse X");
+    [SerializeField]
+    private bool lookAt = true;
 
-        //transform.Rotate(new Vector3(yAxis, xAxis, 0));
+    private void Update()
+    {
+        Refresh();
+    }
 
-        transform.eulerAngles = new Vector3(yAxis, 0, 0);
+    public void Refresh()
+    {
+        if (target == null)
+        {
+            Debug.LogWarning("Missing target ref !", this);
+
+            return;
+        }
+        offsetPosition = new Vector3(1, 2, -5);
+        // compute position
+        if (offsetPositionSpace == Space.Self)
+        {
+            transform.position = target.TransformPoint(offsetPosition);
+        }
+        else
+        {
+            transform.position = target.position + offsetPosition;
+        }
+
+        // compute rotation
+        if (lookAt)
+        {
+            transform.LookAt(target);
+        }
+        else
+        {
+            transform.rotation = target.rotation;
+        }
     }
 }
