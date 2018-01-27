@@ -13,7 +13,7 @@ public class PlayerController : MonoBehaviour {
 
 	private bool _isTouchingTree;
 	private GameObject _currentTree;
-	private Thread _currentThread;
+	private Mycelium _currentThread;
 	private bool _isMycelliumMode;
 	private int _numPins = Constants.NEEDLE_COUNT;
 	
@@ -33,14 +33,14 @@ public class PlayerController : MonoBehaviour {
 		{
 			if(!_isMycelliumMode)
 			{
-				_currentThread = Instantiate(_threadPrefab, _currentTree.transform).GetComponent<Thread>();
-				_currentThread._startingPoint = _currentTree;
+				_currentThread = Instantiate(_threadPrefab, _currentTree.transform).GetComponent<Mycelium>();
+				_currentThread.startObject = _currentTree;
 				_isMycelliumMode = true;
 			}
 
 			else
 			{
-				_currentThread._endPoint = _currentTree;
+				_currentThread.endObject = _currentTree;
 				_currentThread = null;
 				_numPins = Mathf.Max(_numPins - 1, 0);
 				_isMycelliumMode = false;

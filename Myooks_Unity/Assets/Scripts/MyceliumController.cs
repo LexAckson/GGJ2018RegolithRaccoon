@@ -91,23 +91,23 @@ public class Mycelium : MonoBehaviour {
     private void BalanceResources()
     {
         //Only trade if the end is a tree
-        GreenTree gtEnd = end.GetComponent<GreenTree>();
+        GreenTree gtEnd = endObject.GetComponent<GreenTree>();
 
         if (gtEnd != null)
         {
-            GreenTree gtStart = start.GetComponent<GreenTree>();
-            Dictionary<Types, int> gtStartResourceDict = gtStart.getResourceNum();
-            Dictionary<Types, int> gtEndResourceDict = gtEnd.getResourceNum();
-            int nutrientDiff = gtStartResourceDict["Nutrients"] - gtEndResourceDict["Nutrients"];
-            if (nutrientDiff >= 2)
-            {
-                gtStart.TakeResource("Nutrients");
-                gtEnd.GiveResource("Nutrients");
-            } else if (nutrientDiff <= -2)
-            {
-                gtEnd.TakeResource("Nutrients");
-                gtStart.GiveResource("Nutrients");
-            }
+            //GreenTree gtStart = startObject.GetComponent<GreenTree>();
+            //Dictionary<Types, int> gtStartResourceDict = gtStart.GetResourceNum();
+            //Dictionary<Types, int> gtEndResourceDict = gtEnd.GetResourceNum();
+            //int nutrientDiff = gtStartResourceDict["Nutrients"] - gtEndResourceDict["Nutrients"];
+            //if (nutrientDiff >= 2)
+            //{
+            //    gtStart.TakeResource("Nutrients");
+            //    gtEnd.GiveResource("Nutrients");
+            //} else if (nutrientDiff <= -2)
+            //{
+            //    gtEnd.TakeResource("Nutrients");
+            //    gtStart.GiveResource("Nutrients");
+            //}
         }
 
     }
