@@ -109,6 +109,7 @@ public class Mycelium : MonoBehaviour {
                 Nutrient nut = gtEnd.TakeResource<Nutrient>();
                 gtStart.GiveResource(nut);
             }
+
         }
 
     }

@@ -387,7 +387,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tf: {fileID: 0}
-  ground: {fileID: 1178348182}
   sunSpeed: -0.25
 --- !u!1 &1519510549
 GameObject:
