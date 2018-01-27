@@ -5,4 +5,5 @@ using UnityEngine;
 public static class Tags {
 
 	public const string TREE = "tree";
+	public const string SUN = "sun";
 }
