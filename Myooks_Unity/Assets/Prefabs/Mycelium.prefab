@@ -54,6 +54,6 @@ MonoBehaviour:
   myceliumParticle: {fileID: 0}
   startObject: {fileID: 0}
   endObject: {fileID: 0}
-  myceliumColor: {r: 1, g: 1, b: 1, a: 0}
+  myceliumColor: {r: 1, g: 1, b: 1, a: 0.822}
   myceliumDots: []
   mycelium_layer: 

@@ -23,6 +23,7 @@ public class GreenTree : MonoBehaviour {
 		_resources = new Dictionary<Type , Queue<Resource>>();
         _resourcePrefabs = new Dictionary<string, GameObject>();
         foreach(ResourcePrefab r in _resourcePrefabsList) {
+            _resources[Type.GetType(r.name)] = new Queue<Resource>();
             _resourcePrefabs.Add(r.name, r.stuff);
         }
 		StartCoroutine(LeafRegrowCheck());
