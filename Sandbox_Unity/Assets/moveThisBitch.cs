@@ -30,6 +30,7 @@ public class moveThisBitch : MonoBehaviour {
             if (Input.GetButton("Jump"))
                 moveDirection.y = jumpSpeed;
         }
+        
 
         //Applying gravity to the controller
         moveDirection.y -= gravity * Time.deltaTime;
