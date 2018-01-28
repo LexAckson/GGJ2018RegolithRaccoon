@@ -28,6 +28,10 @@ public class PlayerController : MonoBehaviour {
     }
 
     void LateUpdate () {
+		if (Input.GetKey("escape"))
+            Application.Quit();
+		if(Input.GetKey(Constants.RESTART_KEY))
+			UnityEngine.SceneManagement.SceneManager.LoadScene("main");
 		if(!_pinDrop)
 		{
 			if(Input.GetAxis(Constants.HORIZONTAL_AXIS) < 0)

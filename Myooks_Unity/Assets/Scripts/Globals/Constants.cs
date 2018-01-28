@@ -4,6 +4,7 @@ using UnityEngine;
 
 public static class Constants
 {
+
     /// PLAYER CONSTS//
     // controls
     public const string HORIZONTAL_AXIS = "Horizontal";

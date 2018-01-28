@@ -8,9 +8,10 @@ public class BugFactory : MonoBehaviour {
 	private static List<GreenTree> _trees;
 
 	private float _bugTimer = 0;
+	private float _gameTimer = 0;
 	public int _bugsPerDrop = 2;
 	public GameObject _bugPrefab;
-	private Dictionary<bugColor, List<Bug>> _bugDict;
+	private static Dictionary<bugColor, List<Bug>> _bugDict;
 
 	void Start () 
 	{
@@ -24,12 +25,15 @@ public class BugFactory : MonoBehaviour {
 	
 	void Update () 
 	{
+		_gameTimer += Time.deltaTime;
 		_bugTimer += Time.deltaTime;
 		if(_bugTimer >= Constants.BUG_SPAWN_TIME)
 		{
 			beginBugDrop();
 			_bugTimer = 0;
 		}
+		if(_trees.Count <= 2)
+			UnityEngine.SceneManagement.SceneManager.LoadScene("gameOver");
 	}
 
 	private void beginBugDrop()
@@ -56,13 +60,13 @@ public class BugFactory : MonoBehaviour {
 		return selectedTree;
 	}
 
-	public void killBug(Bug toKill)
+	public static void killBug(Bug toKill)
 	{
 		_bugDict[toKill._color].Remove(toKill);
-		toKill.die();
+		toKill.killBug();
 	}
 
-	public void killAllBugsOfColor(bugColor color)
+	public static void killAllBugsOfColor(bugColor color)
 	{
         List<Bug> bugsToKill = new List<Bug>();
         foreach (Bug bug in _bugDict[color])
