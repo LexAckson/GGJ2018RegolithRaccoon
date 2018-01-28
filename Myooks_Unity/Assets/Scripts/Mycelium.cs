@@ -8,7 +8,7 @@ public class Mycelium : MonoBehaviour {
     public GameObject myceliumParticle, startObject, endObject;
     public Color myceliumColor;
     private LineRenderer lineRenderer;
-    private int numberOfParticles = 15; //Total number of points in mycelium.
+    private int numberOfParticles = 0; //Total number of points in mycelium.
     private float startWidth = 0.1F;
     public List<GameObject> myceliumDots;
     public string mycelium_layer;
@@ -47,30 +47,27 @@ public class Mycelium : MonoBehaviour {
         lineRenderer.endColor = Color.clear;
         lineRenderer.startWidth = startWidth;
         //one more line position so we can connect the ends
-        lineRenderer.positionCount = numberOfParticles;
+        lineRenderer.positionCount = numberOfParticles + 2;
 
 
-        //spawn our mycelium colliders
-        //make the original mycelium collider so we can link back the tensioner
-        //myceliumDots.Add(Instantiate(myceliumParticle, gameObject.transform));
+        ////spawn our surf colliders
+        ////make the original surf collider so we can link back the surfaceTensioner
+        //myceliumDots.Add(Instantiate(myceliumParticle, startObject.transform.position, Quaternion.identity));
         //myceliumDots[0].layer = LayerMask.NameToLayer(mycelium_layer);
         //myceliumDots[0].transform.parent = gameObject.transform;
-        Vector3 between = endObject.transform.position - startObject.transform.position;
 
-        for (int i = 0; i < numberOfParticles; i++)
-        {
-            //we want to place our piece 1/(numOfPart + 1) of the way from start to end
-            Vector3 pos = startObject.transform.position + (between *(float)i / (float)(numberOfParticles - 1));
-            myceliumDots.Add(Instantiate(myceliumParticle, pos, Quaternion.identity));
-            //only attach if there is an earlier dot
-            if (i > 0)
-                myceliumDots[i].GetComponent<SpringJoint>().connectedBody = myceliumDots[i - 1].GetComponent<Rigidbody>();
-            //myceliumDots[i].layer = LayerMask.NameToLayer(mycelium_layer);
-            //myceliumDots[i].transform.parent = gameObject.transform;
-        }
-        //link the first and last surfaceTensioners to the start/end objects
-        //myceliumDots[0].GetComponent<Thread>().tensioner.connectedBody = startObject.GetComponent<Rigidbody>();
-        //endObject.GetComponent<Thread>().tensioner.connectedBody = myceliumDots[numberOfParticles].GetComponent<Rigidbody>();
+        //for (int i = 1; i < numberOfParticles; i++)
+        //{
+        //    //we want to place our piece 1/(numOfPart + 1) of the way from start to end
+        //    Vector3 pos = i * (startObject.transform.position - endObject.transform.position) / ((numberOfParticles + 1) * 1.0f);
+        //    myceliumDots.Add(Instantiate(myceliumParticle, pos, Quaternion.identity));
+        //    myceliumDots[i].GetComponent<Thread>().surfaceTensioner.connectedBody = myceliumDots[i - 1].GetComponent<Rigidbody>();
+        //    myceliumDots[i].layer = LayerMask.NameToLayer(mycelium_layer);
+        //    myceliumDots[i].transform.parent = gameObject.transform;
+        //}
+        ////link the first and last surfaceTensioners to the start/end objects
+        //myceliumDots[0].GetComponent<Thread>().surfaceTensioner.connectedBody = startObject.GetComponent<Rigidbody>();
+        //endObject.GetComponent<Thread>().surfaceTensioner.connectedBody = myceliumDots[numberOfParticles].GetComponent<Rigidbody>();
     }
 
     // Update is called once per frame
@@ -105,36 +102,31 @@ public class Mycelium : MonoBehaviour {
 
     private void DrawMycelium()
     {
+        Debug.Log("Drawing");
         //reset the colors cause we can be fading or doing effects
         FillGradientKeys();
-        //int numberOfEndpoints = 0;
-        //if (startObject != null)
-        //    ++numberOfEndpoints;
-        //if (endObject != null)
-        //    ++numberOfEndpoints;
-        //don't set positions and then change position count or it freaks out
-        //lineRenderer.positionCount = numberOfParticles;
-
-        //Make sure the first and last particle are stuck to the start/end objects
+        int numberOfEndpoints = 0;
         if (startObject != null)
-            myceliumDots[0].transform.position = startObject.transform.position;
+            ++numberOfEndpoints;
         if (endObject != null)
-            myceliumDots[numberOfParticles - 1].transform.position = endObject.transform.position;
+            ++numberOfEndpoints;
+        //don't set positions and then change position count or it freaks out
+        lineRenderer.positionCount = numberOfParticles + numberOfEndpoints;
 
-        ////start the line
-        //if (startObject != null)
-        //lineRenderer.SetPosition(0, startObject.transform.position);
+        //start the line
+        if (startObject != null)
+        lineRenderer.SetPosition(0, startObject.transform.position);
 
         //line position 1 is our first dot
-        for (int i = 0; i < numberOfParticles; i++)
+        for (int i = 1; i < numberOfParticles + 1; i++)
         {
             //draw our surface line
             lineRenderer.SetPosition(i, myceliumDots[i].transform.position);
         }
 
-        ////connect to the end
-        //if (endObject != null)
-        //lineRenderer.SetPosition(lineRenderer.positionCount - 1, endObject.transform.position);
+        //connect to the end
+        if (endObject != null)
+        lineRenderer.SetPosition(lineRenderer.positionCount - 1, endObject.transform.position);
 
     }
 
