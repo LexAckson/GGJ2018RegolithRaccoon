@@ -63,18 +63,24 @@ public class Mycelium : MonoBehaviour {
     // Update is called once per frame
     void Update()
     {
-        //draw the line
-        DrawMycelium();
+        if (alive)
+        {
+            //draw the line
+            DrawMycelium();
+            //only balance if the player is done setting the line
+            if (!endObject.CompareTag("Player"))
+            {
+                //balance resources
+                BalanceResources();
 
-        //maybe die?
-        if (!alive)
+                //handle bug link interactions
+                BalanceBugs();
+            }
+        }
+        else {
+            //maybe die?
             CleanUpYourOwnCorpse();
-
-        //balance resources
-        BalanceResources();
-
-        //handle bug link interactions
-        BalanceBugs();
+        }
     }
 
     private void DrawMycelium()
@@ -104,12 +110,12 @@ public class Mycelium : MonoBehaviour {
     //balances resources between the two trees
     private void BalanceResources()
     {
-        //Only trade if the end is a tree
+        //Only trade if the both are a greenTree
+        GreenTree gtStart = startObject.GetComponent<GreenTree>();
         GreenTree gtEnd = endObject.GetComponent<GreenTree>();
 
-        if (gtEnd != null)
+        if (gtEnd && gtStart)
         {
-            GreenTree gtStart = startObject.GetComponent<GreenTree>();
             Dictionary<Type, int> gtStartResourceDict = gtStart.getResourceNum();
             Dictionary<Type, int> gtEndResourceDict = gtEnd.getResourceNum();
             int nutrientDiff = gtStartResourceDict[typeof(Nutrient)] - gtEndResourceDict[typeof(Nutrient)];
@@ -150,8 +156,6 @@ public class Mycelium : MonoBehaviour {
             Bug myBug = startBug != null ? startBug : endBug;
             if (myTree != null)
             {
-                //we will be destroying the bug
-                OnDestroyBug(myBug);
                 //matched bug + tree for leaf
                 if (myTree._color == myBug._color)
                 {
@@ -162,6 +166,8 @@ public class Mycelium : MonoBehaviour {
                     //TODO defend tree
                     Debug.Log("Defend a tree");
                 }
+                //we will be destroying the bug
+                OnDestroyBug(myBug);
             }
 
         }

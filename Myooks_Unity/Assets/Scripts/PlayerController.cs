@@ -13,7 +13,7 @@ public class PlayerController : MonoBehaviour {
 
 	private bool _isTouchingTree;
 	private GameObject _currentTree;
-    private Queue<Mycelium> _myceliumQueue;
+    private Queue<Mycelium> _myceliumQueue = new Queue<Mycelium>();
 	private Mycelium _currentThread;
 	private bool _isMycelliumMode;
 	private int _numPins = Constants.NEEDLE_COUNT;
@@ -45,6 +45,8 @@ public class PlayerController : MonoBehaviour {
         if (_dude.transform.position.magnitude > Constants.GROUND_RADIUS)
             _dude.transform.position = _dude.transform.position.normalized * Constants.GROUND_RADIUS;
 
+
+        //Droppin lines
         if (_isTouchingTree && Input.GetKeyDown(Constants.PIN_DROP))
 		{
 			if(!_isMycelliumMode)
