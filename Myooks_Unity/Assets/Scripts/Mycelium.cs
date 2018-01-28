@@ -135,26 +135,32 @@ public class Mycelium : MonoBehaviour {
         Bug startBug = startObject.GetComponent<Bug>();
         Bug endBug = endObject.GetComponent<Bug>();
         if (startBug || endBug) {
+            //whatever happens from this point on,
+            //we will be marking this mycelium for death
+            MarkForDeath();
             //join 2 bugs for bomb
-            if (startBug && endBug)
+            if (startBug && endBug && startBug.color == endBug.color)
             {
                 //TODO Bug Bomb!
                 Debug.Log("Bug BOMB!");
-                OnDestroyBug(startBug);
-                OnDestroyBug(endBug);
+                OnDestroyBugColor(startBug.color);
             }
             //check for trees
             GreenTree myTree = startObject.GetComponent<GreenTree>() != null ? startObject.GetComponent<GreenTree>() : endObject.GetComponent<GreenTree>();
             Bug myBug = startBug != null ? startBug : endBug;
             if (myTree != null)
             {
+                //we will be destroying the bug
+                OnDestroyBug(myBug);
                 //matched bug + tree for leaf
                 if (myTree._color == myBug._color)
                 {
                     //TODO tell tree to grow leaf
+                    Debug.Log("Telling a tree to grow a leaf");
                 } //not matched bug + tree for defense
                 else {
                     //TODO defend tree
+                    Debug.Log("Defend a tree");
                 }
             }
 
