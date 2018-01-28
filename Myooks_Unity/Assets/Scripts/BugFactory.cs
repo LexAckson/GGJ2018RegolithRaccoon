@@ -8,6 +8,7 @@ public class BugFactory : MonoBehaviour {
 	private static List<GreenTree> _trees;
 
 	private float _bugTimer = 0;
+	private float _gameTimer = 0;
 	public int _bugsPerDrop = 2;
 	public GameObject _bugPrefab;
 	private static Dictionary<bugColor, List<Bug>> _bugDict;
@@ -24,12 +25,15 @@ public class BugFactory : MonoBehaviour {
 	
 	void Update () 
 	{
+		_gameTimer += Time.deltaTime;
 		_bugTimer += Time.deltaTime;
 		if(_bugTimer >= Constants.BUG_SPAWN_TIME)
 		{
 			beginBugDrop();
 			_bugTimer = 0;
 		}
+		if(_trees.Count <= 2)
+			UnityEngine.SceneManagement.SceneManager.LoadScene("gameOver");
 	}
 
 	private void beginBugDrop()
