@@ -6,9 +6,9 @@ using UnityEngine;
 public class GreenTree : MonoBehaviour {
 
 	[SerializeField]
-	private GameObject _leafPrefab;
-	public int _leaves;
-	
+	private TreeSpriteInfo _allTreeSpriteInfo;
+	[SerializeField]
+	private SpriteRenderer _leafSprite;
 	public int _toxins;
 	[SerializeField]
 	private List<ResourcePrefab> _resourcePrefabsList;
@@ -29,8 +29,13 @@ public class GreenTree : MonoBehaviour {
             _resources[Type.GetType(r.name)] = new Queue<Resource>();
             _resourcePrefabs.Add(r.name, r.stuff);
         }
-		_bugs = new List<Bug>();
-		StartCoroutine(LeafRegrowCheck());
+		for(int i = 0; i < Constants.LEAF_COUNT; i++)
+		{
+			makeResource<Leaf>();
+		}
+
+		StartCoroutine(waitToInit());
+		
 	}
 	
 	void Update () 
@@ -40,22 +45,38 @@ public class GreenTree : MonoBehaviour {
 			_sunTimer += Time.deltaTime;
 		}
 
+
 		if(_sunTimer >= Constants.NUTRIENT_MAKE_TIMER)
 		{
 			_sunTimer = 0;
 			makeResource<Nutrient>();
 		}
+		updateLeafSprite();
+		
 	}
 
+	private IEnumerator waitToInit()
+	{
+		while(!_allTreeSpriteInfo.isInit())
+		{
+			yield return null;
+		}
+		updateLeafSprite();
+		GetComponent<SpriteRenderer>().sprite = _allTreeSpriteInfo.getTreeSprite(_color);
+		AnimatorOverrideController animatorOverrideController = new AnimatorOverrideController(_allTreeSpriteInfo.getAnimator(_color));
+		GetComponent<Animator>().runtimeAnimatorController = animatorOverrideController;
+		_bugs = new List<Bug>();
+		StartCoroutine(LeafRegrowCheck());
+	}
 	private IEnumerator LeafRegrowCheck()
 	{
 		while(true)
 		{
 			yield return new WaitForSeconds(Constants.TREE_NUTRIENT_CHECK_TIMER);
-			if(_leaves < Constants.LEAF_COUNT)
+			if(_resources[typeof(Leaf)].Count < Constants.LEAF_COUNT && _inSun)
 			{
 				// TODO: do regrow animation
-				_leaves++;
+				makeResource<Leaf>();
 				removeResource<Nutrient>();
 			}
 		}
@@ -117,11 +138,10 @@ public class GreenTree : MonoBehaviour {
 	{
 		_bugs.Remove(bug);
 	}
+
+	private void updateLeafSprite()
+	{
+		_leafSprite.sprite = _allTreeSpriteInfo.getSprite(_color, _resources[typeof(Leaf)].Count);
+	}
 }
 
-
-[Serializable]
-public struct ResourcePrefab {
-    public string name;
-    public GameObject stuff;
-}

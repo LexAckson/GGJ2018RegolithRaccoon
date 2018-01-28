@@ -7,5 +7,6 @@ public static class Tags {
 	public const string TREE = "tree";
 	public const string SUN = "sun";
 	public const string NUTRIENT = "nutrient";
+	public const string LEAF = "leaf";
     public const string BUG = "bug";
 }

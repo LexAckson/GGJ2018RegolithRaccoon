@@ -6,7 +6,7 @@ public class Leaf : Resource {
 
 	void Start () {
 		name = "leaf";
-		//gameObject.tag = Tags.NUTRIENT;
+		//gameObject.tag = Tags.LEAF;
 	}
 	public override void make()
 	{
