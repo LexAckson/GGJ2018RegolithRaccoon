@@ -82,7 +82,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a7ae476a2fc379c47a147227d93a843b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _allTreeSpriteInfo: {fileID: 0}
+  _allTreeSpriteInfo: {fileID: 114727485456226232, guid: 467437af001c99c499288e9ebda9b09c,
+    type: 2}
   _leafSprite: {fileID: 212989762988535652}
   _toxins: 0
   _resourcePrefabsList:
@@ -91,7 +92,7 @@ MonoBehaviour:
   - name: Leaf
     stuff: {fileID: 1919793255443800, guid: 47c37a1e33947864f9ee04c31d17e339, type: 2}
   _bugs: []
-  _color: 0
+  _color: 1
   _activeColor: 
 --- !u!212 &212040840161827656
 SpriteRenderer:

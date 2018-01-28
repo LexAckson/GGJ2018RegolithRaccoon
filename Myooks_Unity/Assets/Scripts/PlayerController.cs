@@ -36,13 +36,13 @@ public class PlayerController : MonoBehaviour {
 		{
 			if(Input.GetAxis(Constants.HORIZONTAL_AXIS) < 0)
 			{
-				_dude.transform.RotateAround(_ground.transform.position, Vector3.up, -Constants.MOVE_SPEED * Time.deltaTime * (1f + Constants.GROUND_RADIUS - _dude.transform.position.magnitude) );
+				_dude.transform.RotateAround(_ground.transform.position, Vector3.up, -Constants.MOVE_SPEED * Time.deltaTime * (2f + Constants.GROUND_RADIUS - _dude.transform.position.magnitude) );
 				if(_isFacingClockwise)
 					changeDirection();
 			}
 			if(Input.GetAxis(Constants.HORIZONTAL_AXIS) > 0)
 			{
-				_dude.transform.RotateAround(_ground.transform.position, Vector3.up, Constants.MOVE_SPEED * Time.deltaTime * (1f + Constants.GROUND_RADIUS - _dude.transform.position.magnitude) );
+				_dude.transform.RotateAround(_ground.transform.position, Vector3.up, Constants.MOVE_SPEED * Time.deltaTime * (2f + Constants.GROUND_RADIUS - _dude.transform.position.magnitude) );
 				if(!_isFacingClockwise)
 					changeDirection();
 			}
