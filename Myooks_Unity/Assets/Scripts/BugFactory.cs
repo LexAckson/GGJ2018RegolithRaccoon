@@ -22,10 +22,6 @@ public class BugFactory : MonoBehaviour {
 			addTreeToList(tree);
 		beginBugDrop();
 		Mycelium.OnDestroyBug += killBug;
-<<<<<<< HEAD
-=======
-		//Mycelium.OnDestroyBugColor += killAllBugsOfColor;
->>>>>>> 89769ca71ffd52b4544b5ad676bb976d35ac16e1
 	}
 	
 	private static void addTreeToList(GreenTree tree)
@@ -66,12 +62,8 @@ public class BugFactory : MonoBehaviour {
 	{
 		Bug bug = Instantiate(_bugPrefab).GetComponent<Bug>();
 		bugColor newBugColor = getValidColor();
-<<<<<<< HEAD
 		addToStaticBugList(bug, newBugColor);
 		printDict();
-=======
-		_bugDict[newBugColor].Add(bug);
->>>>>>> 89769ca71ffd52b4544b5ad676bb976d35ac16e1
 		bug.Initialize(selectTreeForDrop(bug, newBugColor, 0), newBugColor, 
 				_bugSprites.getAnimator(newBugColor), _bugSprites.getTreeSprite(newBugColor));
 	}
