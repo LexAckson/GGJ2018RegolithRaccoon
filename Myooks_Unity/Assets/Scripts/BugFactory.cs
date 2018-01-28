@@ -40,7 +40,7 @@ public class BugFactory : MonoBehaviour {
 	private void bugDrop()
 	{
 		Bug bug = Instantiate(_bugPrefab).GetComponent<Bug>();
-		bugColor newBugColor = Utility.getRandomEnum<bugColor>();
+		bugColor newBugColor = getValidColor();
 		_bugDict[newBugColor].Add(bug);
 		bug.Initialize(selectTreeForDrop(bug, newBugColor), newBugColor);
 	}
@@ -66,6 +66,22 @@ public class BugFactory : MonoBehaviour {
 	{
 		foreach(Bug bug in _bugDict[color])
 			killBug(bug);
+	}
+
+	private bugColor getValidColor()
+	{
+		bugColor newBugColor = Utility.getRandomEnum<bugColor>();
+		if(isBugColorValid(newBugColor))
+			return newBugColor;
+		return getValidColor();
+	}
+
+	private bool isBugColorValid(bugColor color)
+	{
+		foreach(GreenTree tree in _trees)
+			if(tree._color == color)
+				return true;
+		return false;
 	}
 
 }
