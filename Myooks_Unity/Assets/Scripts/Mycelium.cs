@@ -14,6 +14,14 @@ public class Mycelium : MonoBehaviour {
     public string mycelium_layer;
     private bool alive = true;
 
+    //destroy bugs events
+    public delegate void DestroyBugAction(Bug bugToDestroy);
+    public static event DestroyBugAction OnDestroyBug;
+
+    public delegate void DestroyBugColorAction(bugColor bugColorToDestory);
+    public static event DestroyBugColorAction OnDestroyBugColor;
+
+
     public void Init(GameObject start, GameObject end)
     {
         startObject = start;
@@ -59,9 +67,14 @@ public class Mycelium : MonoBehaviour {
         DrawMycelium();
 
         //maybe die?
+        if (!alive)
+            CleanUpYourOwnCorpse();
 
         //balance resources
         BalanceResources();
+
+        //handle bug link interactions
+        BalanceBugs();
     }
 
     private void DrawMycelium()
@@ -86,7 +99,7 @@ public class Mycelium : MonoBehaviour {
     public void PinTheEnd(GameObject end)
     {
         endObject = end;
-        //fixup the links
+        //TODO fixup the links
     }
     //balances resources between the two trees
     private void BalanceResources()
@@ -112,6 +125,59 @@ public class Mycelium : MonoBehaviour {
 
         }
 
+    }
+
+    //join 2 bugs for bomb
+    //matched bug + tree for leaf
+    //not matched bug + tree for defense
+    private void BalanceBugs()
+    {
+        Bug startBug = startObject.GetComponent<Bug>();
+        Bug endBug = endObject.GetComponent<Bug>();
+        if (startBug || endBug) {
+            //join 2 bugs for bomb
+            if (startBug && endBug)
+            {
+                //TODO Bug Bomb!
+                Debug.Log("Bug BOMB!");
+                OnDestroyBug(startBug);
+                OnDestroyBug(endBug);
+            }
+            //check for trees
+            GreenTree myTree = startObject.GetComponent<GreenTree>() != null ? startObject.GetComponent<GreenTree>() : endObject.GetComponent<GreenTree>();
+            Bug myBug = startBug != null ? startBug : endBug;
+            if (myTree != null)
+            {
+                //matched bug + tree for leaf
+                if (myTree._color == myBug._color)
+                {
+                    //TODO tell tree to grow leaf
+                } //not matched bug + tree for defense
+                else {
+                    //TODO defend tree
+                }
+            }
+
+        }
+    }
+
+    //this will make it destroy iself after all pending things are done
+    public void MarkForDeath()
+    {
+        alive = false;
+    }
+
+    private void CleanUpYourOwnCorpse()
+    {
+        //TODO maybe some fade away?
+
+        //destroy all the bits
+        foreach (GameObject go in myceliumDots)
+        {
+            Destroy(go);
+        }
+        Destroy(lineRenderer);
+        Destroy(this);
     }
 
 }
