@@ -79,7 +79,25 @@ public class BugFactory : MonoBehaviour {
 		return selectedTree;
 	}
 
-	public static void killAllBugsOfColor(bugColor color, bool isBomb = false)
+    public IEnumerator Blink(Color _blinkIn, int _blinkCount, float _totalBlinkDuration)
+    {
+        // We divide the whole duration for the ammount of blinks we will perform
+        float fractionalBlinkDuration = _totalBlinkDuration / _blinkCount;
+
+        for (int blinked = 0; blinked < _blinkCount; blinked++)
+        {
+            // Each blink needs 2 lerps: we give each lerp half of the duration allocated for 1 blink
+            float halfFractionalDuration = fractionalBlinkDuration * 0.5f;
+
+            // Lerp to the color
+            yield return StartCoroutine(ColorLerpTo(_blinkIn, halfFractionalDuration));
+
+            // Lerp to transparent
+            StartCoroutine(ColorLerpTo(Color.clear, halfFractionalDuration));
+        }
+    }
+
+    public static void killAllBugsOfColor(bugColor color, bool isBomb = false)
 	{
         List<Bug> bugsToKill = new List<Bug>(_staticBugDict[color]);
 		_staticBugDict[color] = new List<Bug>();
@@ -88,6 +106,7 @@ public class BugFactory : MonoBehaviour {
 			Bug b = bugsToKill[i];
             b.killBug(isBomb);
 		}
+        //TODO flash the dang screen in color
 	}
 
 	private void killBug(Bug bug, bool isBomb)
