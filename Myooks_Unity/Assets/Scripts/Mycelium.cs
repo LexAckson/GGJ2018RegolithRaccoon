@@ -139,11 +139,11 @@ public class Mycelium : MonoBehaviour {
             //we will be marking this mycelium for death
             MarkForDeath();
             //join 2 bugs for bomb
-            if (startBug && endBug && startBug.color == endBug.color)
+            if (startBug && endBug && startBug._color == endBug._color)
             {
                 //TODO Bug Bomb!
                 Debug.Log("Bug BOMB!");
-                OnDestroyBugColor(startBug.color);
+                OnDestroyBugColor(startBug._color);
             }
             //check for trees
             GreenTree myTree = startObject.GetComponent<GreenTree>() != null ? startObject.GetComponent<GreenTree>() : endObject.GetComponent<GreenTree>();

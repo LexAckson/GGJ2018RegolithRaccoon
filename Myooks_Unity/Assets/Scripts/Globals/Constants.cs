@@ -12,11 +12,12 @@ public static class Constants
 	public const KeyCode MOVE_RIGHT = KeyCode.D;
 	public const KeyCode PIN_DROP = KeyCode.Q;
 	// vars
-	public const float MOVE_SPEED = .2f; 
+	public const float MOVE_SPEED = 20f; 
 	public const int NEEDLE_COUNT = 3;
+    public const float GROUND_RADIUS = 8f;
 
-	/// TREE CONSTS ///
-	public const float TREE_NUTRIENT_CHECK_TIMER = .5f; 
+    /// TREE CONSTS ///
+    public const float TREE_NUTRIENT_CHECK_TIMER = .5f; 
 	public const int LEAF_COUNT = 3;
 	public const float NUTRIENT_ABSORB_TIME = 1;
 	public const float NUTRIENT_MAKE_TIMER = 2;
