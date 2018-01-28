@@ -49,9 +49,9 @@ public class PlayerController : MonoBehaviour {
 			Vector3 toCenter = (_dude.transform.position - _ground.transform.position).normalized;
 
 			if (Input.GetAxis(Constants.VERTICAL_AXIS) < 0)
-				_dude.transform.position = Vector3.MoveTowards(_dude.transform.position, Vector3.zero, Constants.MOVE_SPEED * 0.2f * Time.deltaTime);
+				_dude.transform.position = Vector3.MoveTowards(_dude.transform.position, Vector3.zero, Constants.MOVE_SPEED * 0.5f * Time.deltaTime);
 			if (Input.GetAxis(Constants.VERTICAL_AXIS) > 0)
-				_dude.transform.position = Vector3.MoveTowards(_dude.transform.position, Vector3.zero, -Constants.MOVE_SPEED * 0.2f * Time.deltaTime);
+				_dude.transform.position = Vector3.MoveTowards(_dude.transform.position, Vector3.zero, -Constants.MOVE_SPEED * 0.5f * Time.deltaTime);
 
 			if(Input.GetAxis(Constants.VERTICAL_AXIS) == 0 && Input.GetAxis(Constants.HORIZONTAL_AXIS) == 0)
 				_anim.SetBool("isMoving", false);
