@@ -15,6 +15,8 @@ public class GreenTree : MonoBehaviour {
     private Dictionary<string, GameObject> _resourcePrefabs;
     public Dictionary<Type , Queue<Resource>> _resources;
 
+	public bugColor _color;
+
 	private bool _inSun;
 	private float _sunTimer;
 
