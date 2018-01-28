@@ -5,7 +5,8 @@ using UnityEngine;
 
 public class Mycelium : MonoBehaviour {
 
-    public GameObject myceliumParticle, startObject, endObject;
+    public GameObject myceliumParticle, pinSprite, startObject, endObject;
+    private GameObject startPin, endPin;
     public Color myceliumColor;
     private LineRenderer lineRenderer;
     private int numberOfParticles = 15; //Total number of points in mycelium.
@@ -39,6 +40,10 @@ public class Mycelium : MonoBehaviour {
         myGradient = new Gradient();
         myGCK = new GradientColorKey[8];
         myGAK = new GradientAlphaKey[2];
+
+        //drop the pin
+        startPin = Instantiate(pinSprite, endObject.transform.position, endObject.transform.rotation);
+        startPin.GetComponent<SpriteRenderer>().flipX = UnityEngine.Random.value > 0.5f;
 
         //setup our line renderer
         lineRenderer = gameObject.AddComponent<LineRenderer>();
@@ -121,8 +126,10 @@ public class Mycelium : MonoBehaviour {
 
     public void PinTheEnd(GameObject end)
     {
+        //drop the pin
+        endPin = Instantiate(pinSprite, endObject.transform.position, endObject.transform.rotation);
+        endPin.GetComponent<SpriteRenderer>().flipX = UnityEngine.Random.value > 0.5f;
         endObject = end;
-        //TODO fixup the links
     }
     //balances resources between the two trees
     private void BalanceResources()
@@ -235,6 +242,10 @@ public class Mycelium : MonoBehaviour {
         }
         Destroy(lineRenderer);
         Destroy(gameObject);
+        if (startPin != null)
+            Destroy(startPin);
+        if (endPin != null)
+            Destroy(endPin);
     }
 
     private void FillGradientKeys()

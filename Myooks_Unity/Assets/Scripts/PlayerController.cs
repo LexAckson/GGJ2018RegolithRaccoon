@@ -95,7 +95,7 @@ public class PlayerController : MonoBehaviour {
 			//don't attach a tree to itself
 			else if (_currentThread.startObject != _currentTree)
 			{
-				_currentThread.endObject = _currentTree;
+				_currentThread.PinTheEnd(_currentTree);
 				_currentThread = null;
 				_numPins = Mathf.Max(_numPins - 1, 0);
 				_isMycelliumMode = false;
