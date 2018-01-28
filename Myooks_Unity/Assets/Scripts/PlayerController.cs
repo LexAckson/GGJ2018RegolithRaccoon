@@ -60,8 +60,8 @@ public class PlayerController : MonoBehaviour {
 		}
 
         //don't go to far to the center
-        if (_dude.transform.position.magnitude < 1f)
-            _dude.transform.position = _dude.transform.position.normalized;
+        if (_dude.transform.position.magnitude < 2f)
+            _dude.transform.position = _dude.transform.position.normalized * 2f;
         //don't go off the planet
         if (_dude.transform.position.magnitude > Constants.GROUND_RADIUS)
             _dude.transform.position = _dude.transform.position.normalized * Constants.GROUND_RADIUS;
