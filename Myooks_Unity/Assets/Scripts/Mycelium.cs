@@ -154,12 +154,12 @@ public class Mycelium : MonoBehaviour {
             int nutrientDiff = gtStartResourceDict[typeof(Nutrient)] - gtEndResourceDict[typeof(Nutrient)];
             if (nutrientDiff >= 2)
             {
-                Nutrient nut = gtStart.TakeResource<Nutrient>();
-                gtEnd.GiveResource(nut);
+                gtStart.removeResource<Nutrient>();
+                gtEnd.makeResource<Nutrient>();
             } else if (nutrientDiff <= -2)
             {
-                Nutrient nut = gtEnd.TakeResource<Nutrient>();
-                gtStart.GiveResource(nut);
+                gtEnd.removeResource<Nutrient>();
+                gtStart.makeResource<Nutrient>();
             }
 
         }

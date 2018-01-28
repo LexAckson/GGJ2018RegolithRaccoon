@@ -17,12 +17,15 @@ public class GreenTree : MonoBehaviour {
 	public List<Bug> _bugs;
 
 	public bugColor _color;
+	public List<bugColor> _activeColor;
 
 	private bool _inSun;
 	private float _sunTimer;
+	private bool _isDead;
 
 	void Start () 
 	{
+		_activeColor = new List<bugColor>();
 		_resources = new Dictionary<Type , Queue<Resource>>();
         _resourcePrefabs = new Dictionary<string, GameObject>();
         foreach(ResourcePrefab r in _resourcePrefabsList) {
@@ -40,6 +43,9 @@ public class GreenTree : MonoBehaviour {
 	
 	void Update () 
 	{
+		if(_isDead)
+			return;
+
 		if(_inSun)
 		{
 			_sunTimer += Time.deltaTime;
@@ -66,6 +72,7 @@ public class GreenTree : MonoBehaviour {
 		AnimatorOverrideController animatorOverrideController = new AnimatorOverrideController(_allTreeSpriteInfo.getAnimator(_color));
 		GetComponent<Animator>().runtimeAnimatorController = animatorOverrideController;
 		_bugs = new List<Bug>();
+		_activeColor.Add(_color);
 		StartCoroutine(LeafRegrowCheck());
 	}
 	private IEnumerator LeafRegrowCheck()
@@ -75,7 +82,6 @@ public class GreenTree : MonoBehaviour {
 			yield return new WaitForSeconds(Constants.TREE_NUTRIENT_CHECK_TIMER);
 			if(_resources[typeof(Leaf)].Count < Constants.LEAF_COUNT && _inSun)
 			{
-				// TODO: do regrow animation
 				makeResource<Leaf>();
 				removeResource<Nutrient>();
 			}
@@ -90,18 +96,15 @@ public class GreenTree : MonoBehaviour {
 		return countDict;
 	}
 
-	public T TakeResource<T>() where T : Resource
+	public int getResourceNum(Type t)
 	{
-		return _resources[typeof(T)].Dequeue() as T;
+		return _resources[t].Count;
 	}
 
-	public void GiveResource(Resource newResource)
+	public void makeResource<T>() where T : Resource
 	{
-		_resources[newResource.GetType()].Enqueue(newResource);
-	}
-
-	private void makeResource<T>() where T : Resource
-	{
+		if(_isDead)
+			return;
 		T newResource = Instantiate(_resourcePrefabs[typeof(T).ToString()]).GetComponent<T>();
 		newResource.make();
 		_resources[typeof(T)].Enqueue(newResource);
@@ -128,6 +131,15 @@ public class GreenTree : MonoBehaviour {
 			_inSun = false;
 		}
 	}
+	public void addColor(bugColor color)
+	{
+		_activeColor.Add(color);
+	}
+
+	public void removeColor(bugColor color)
+	{
+		_activeColor.Remove(color);
+	}
 
 	public void bugLanded(Bug bug)
 	{
@@ -142,6 +154,17 @@ public class GreenTree : MonoBehaviour {
 	private void updateLeafSprite()
 	{
 		_leafSprite.sprite = _allTreeSpriteInfo.getSprite(_color, _resources[typeof(Leaf)].Count);
+	}
+
+	public void die()
+	{
+		foreach(Bug bug in _bugs)
+			bug.killBug();
+		_isDead = true;
+		GetComponent<Animator>().SetBool("isDead", true);
+		StopCoroutine(LeafRegrowCheck());
+		for(int i = 0; i < getResourceNum(typeof(Nutrient)); i++)
+			removeResource<Nutrient>();
 	}
 }
 

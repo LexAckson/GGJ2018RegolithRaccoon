@@ -33,11 +33,18 @@ public class Bug : MonoBehaviour {
 			_eatTimer += Time.deltaTime;
 			if(_eatTimer >= Constants.BUG_EAT_TIME)
 			{
-                //TODO instead, kill the tree if no leaves
-				_targetTree.removeResource<Leaf>();
+                if(_targetTree.getResourceNum(typeof(Leaf)) > 0)
+					_targetTree.removeResource<Leaf>();
+				else
+				{
+					BugFactory.deadTree(_targetTree);
+				}
 				_eatTimer = 0;
 			}
 		}
+
+		_isAttacked = _targetTree._activeColor.Contains(_color);
+
 		if(_isAttacked)
 		{
 			_attackTimer+= Time.deltaTime;
@@ -48,17 +55,15 @@ public class Bug : MonoBehaviour {
 		}
 	}
 
-	void killBug()
+	public void killBug()
 	{
 		_isLanded = false;
 		_targetTree.killBug(this);
 		_anim.SetBool("isDead", true);
 	}
 
-	public void die()
+	void die()
 	{
-		// TODO:
-		// animation for dead bug
 		Destroy(gameObject);
 	}
 
