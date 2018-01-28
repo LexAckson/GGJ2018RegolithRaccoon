@@ -53,6 +53,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   myceliumParticle: {fileID: 1771293851188560, guid: cc9f93f2c5309234389ff16bd5e35439,
     type: 2}
+  pinSprite: {fileID: 1551758881413532, guid: ee1b78df53025be41b1150101a45742b, type: 2}
   startObject: {fileID: 0}
   endObject: {fileID: 0}
   myceliumColor: {r: 1, g: 1, b: 1, a: 1}

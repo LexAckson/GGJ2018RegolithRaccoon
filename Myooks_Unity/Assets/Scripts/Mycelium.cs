@@ -10,7 +10,7 @@ public class Mycelium : MonoBehaviour {
     public Color myceliumColor;
     private LineRenderer lineRenderer;
     private int numberOfParticles = 15; //Total number of points in mycelium.
-    private float startWidth = 0.1F;
+    private float startWidth = 0.2F;
     public List<GameObject> myceliumDots;
     public string mycelium_layer;
     private int lifeForce = 255;
@@ -87,7 +87,7 @@ public class Mycelium : MonoBehaviour {
         else if (lifeForce > 0)
         {
             //fade out a bit
-            lifeForce = lifeForce - 2;
+            lifeForce = lifeForce - 1;
             //draw the line
             DrawMycelium();
         } else
@@ -255,11 +255,13 @@ public class Mycelium : MonoBehaviour {
         myGAK[0].time = 0f;
         myGAK[1].alpha = myceliumColor.a;
         myGAK[1].time = 1f;
-        //set colors
-        for (int i = 0; i < myGCK.Length; i++)
-        {
-            myGCK[i].color = myceliumColor;
-            myGCK[i].time = (i * 1f)/myGCK.Length;
+        if(myFlows.Count == 0) { 
+            //set colors
+            for (int i = 0; i < myGCK.Length; i++)
+            {
+                myGCK[i].color = Color.Lerp(myGCK[i].color, myceliumColor, 0.01f);
+                myGCK[i].time = (i * 1f)/myGCK.Length;
+            }
         }
         //now overlay the effect colors
         foreach (Flow f in myFlows)
