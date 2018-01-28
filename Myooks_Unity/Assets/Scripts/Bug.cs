@@ -14,6 +14,13 @@ public class Bug : MonoBehaviour {
 	private bool _isBombKill;
 	public bool _isDead;
 	private Animator _anim;
+	private AudioSource _bugSounds;
+	[SerializeField]
+	private AudioClip _bugDie;
+	[SerializeField]
+	private AudioClip _bugMunch;
+	[SerializeField]
+	private AudioClip _bugExplode;
 
 	public void Initialize(GreenTree targetTree, bugColor color, RuntimeAnimatorController animatorController, Sprite sprite)
 	{
@@ -72,7 +79,11 @@ public class Bug : MonoBehaviour {
 	void die()
 	{
 		if(_isBombKill)
+		{
 			Destroy(gameObject);
+			_bugSounds.clip = _bugExplode;
+			_bugSounds.Play();
+		}
 		else
 			StartCoroutine(fall());
 	}
@@ -81,7 +92,9 @@ public class Bug : MonoBehaviour {
 	{
 		Vector3 displacement = (Vector3.zero - transform.position) / 2;
 		Vector3 start = transform.position;
-		Vector3 target = transform.position + displacement;
+		Vector3 target = transform.position + displacement + Utility.offset(.1f,1.5f,.1f,1.5f);
+		_bugSounds.clip = _bugDie;
+		_bugSounds.Play();
 		target.y = 0;
 		float timer = 0;
 		while(timer / (Constants.BUG_DROP_TIME / 2) < 1)
@@ -95,15 +108,18 @@ public class Bug : MonoBehaviour {
 	private IEnumerator land()
 	{
 		float timer = 0;
+		Vector3 endPos = _targetTree._leafSprite.gameObject.transform.position + (Vector3.up * .2f) + Utility.offset(.1f,1.5f,.1f,1.5f);
 		while(timer / Constants.BUG_DROP_TIME < 1)
 		{
 			timer += Time.deltaTime;
-			transform.position = Vector3.Lerp(_startPos, _targetTree._leafSprite.gameObject.transform.position + (Vector3.up * .2f), timer / Constants.BUG_DROP_TIME);
+			transform.position = Vector3.Lerp(_startPos, endPos, timer / Constants.BUG_DROP_TIME);
 			yield return null;
 		}
 		_isLanded = true;
 		_targetTree.bugLanded(this);
 		_anim.SetBool("isOnTree", true);
+		_bugSounds.clip = _bugMunch;
+		_bugSounds.Play();
 	}
 
 }

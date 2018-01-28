@@ -40,4 +40,8 @@ public static class Constants
         { bugColor.RED, Color.red },
         { bugColor.YELLOW, Color.yellow}
     };
+
+	public const string TITLE_SCREEN = "title";
+	public const string GAME_OVER_SCREEN = "title";
+	public const string MAIN_SCREEN = "ThisScene";
 }

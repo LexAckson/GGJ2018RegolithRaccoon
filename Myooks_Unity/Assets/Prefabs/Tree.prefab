@@ -25,7 +25,8 @@ GameObject:
   - component: {fileID: 65287013825604770}
   - component: {fileID: 114936708851019256}
   - component: {fileID: 95477264287273782}
-  m_Layer: 0
+  - component: {fileID: 82601557465497964}
+  m_Layer: 11
   m_Name: Tree
   m_TagString: tree
   m_Icon: {fileID: 0}
@@ -41,7 +42,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4834875261744908}
   - component: {fileID: 212989762988535652}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Leaves
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -69,7 +70,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1978975441393562}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: -0.1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4476153195454842}
@@ -102,6 +103,86 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 3.7506628, y: 9.999999, z: 1.1783462}
   m_Center: {x: -0.6084248, y: 0.0000000097607, z: -0.4891731}
+--- !u!82 &82601557465497964
+AudioSource:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1742011284786650}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 0}
+  m_PlayOnAwake: 0
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 197
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 2
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    - serializedVersion: 2
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 2
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 0
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 2
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 2
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 0
 --- !u!95 &95477264287273782
 Animator:
   serializedVersion: 3
@@ -139,6 +220,8 @@ MonoBehaviour:
   - name: Leaf
     stuff: {fileID: 1919793255443800, guid: 47c37a1e33947864f9ee04c31d17e339, type: 2}
   _bugs: []
+  _treeDie: {fileID: 8300000, guid: 0287caa1eeb82504a84b77338cd1cfed, type: 3}
+  _leafDie: {fileID: 8300000, guid: dea8116759cc4a04c962f94adbb980c3, type: 3}
   _color: 2
   _activeColor: 
 --- !u!114 &114936708851019256

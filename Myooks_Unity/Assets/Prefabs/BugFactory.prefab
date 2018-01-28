@@ -78,6 +78,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e862f44b181944e49aaef0c8b0526c51, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _treesStart: []
   _bugSprites: {fileID: 114822154040202304}
   _bugsPerDrop: 2
   _bugPrefab: {fileID: 1841089009084414, guid: b6ee062ce3e0954448cb2ea76ad22720, type: 2}

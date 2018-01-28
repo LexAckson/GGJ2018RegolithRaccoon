@@ -10,6 +10,14 @@ public class PlayerController : MonoBehaviour {
 	private GameObject _ground;
 	[SerializeField]
 	private GameObject _myceliumPrefab;
+	[SerializeField]
+	private AudioSource _walkSound;
+	[SerializeField]
+	private AudioSource _playerFx;
+	[SerializeField]
+	private AudioClip _startPin;
+	[SerializeField]
+	private AudioClip _endPin;
 	private Animator _anim;
 
 	private bool _isTouchingTree;
@@ -30,11 +38,19 @@ public class PlayerController : MonoBehaviour {
 		_threadList = new List<Mycelium>();
     }
 
+	private void playWalk(bool play)
+	{
+		if(play && !_walkSound.isPlaying)
+			_walkSound.Play();
+		else if(!play)
+			_walkSound.Pause();
+	}
+
     void Update () {
 		if (Input.GetKey("escape"))
             Application.Quit();
 		if(Input.GetKey(Constants.RESTART_KEY))
-			UnityEngine.SceneManagement.SceneManager.LoadScene("main");
+			UnityEngine.SceneManagement.SceneManager.LoadScene(Constants.TITLE_SCREEN);
 		if(!_pinDrop)
 		{
 			if(Input.GetAxis(Constants.HORIZONTAL_AXIS) < 0)
@@ -59,9 +75,15 @@ public class PlayerController : MonoBehaviour {
 				_dude.transform.position = Vector3.MoveTowards(_dude.transform.position, Vector3.zero, -Constants.MOVE_SPEED * 0.5f * Time.deltaTime);
 
 			if(Input.GetAxis(Constants.VERTICAL_AXIS) == 0 && Input.GetAxis(Constants.HORIZONTAL_AXIS) == 0)
+			{
+				playWalk(false);
 				_anim.SetBool("isMoving", false);
+			}
 			else
+			{
+				playWalk(true);
 				_anim.SetBool("isMoving", true);
+			}
 		}
 
         //don't go to far to the center
@@ -80,6 +102,8 @@ public class PlayerController : MonoBehaviour {
 			checkMycelium();
 			if(!_isMycelliumMode)
 			{
+				_playerFx.clip = _startPin;
+				_playerFx.Play();
 				if ( _numPins == 0 )
             	{
 					//mark the first mycellum in the queue for death and remove it
@@ -95,6 +119,9 @@ public class PlayerController : MonoBehaviour {
 			//don't attach a tree to itself
 			else if (_currentThread.startObject != _currentTree)
 			{
+				_playerFx.clip = _endPin;
+					_playerFx.Play();
+
 				_currentThread.PinTheEnd(_currentTree);
 				_currentThread = null;
 				_numPins = Mathf.Max(_numPins - 1, 0);

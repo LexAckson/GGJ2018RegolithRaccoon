@@ -49,4 +49,9 @@ public static class Utility
         return values[UnityEngine.Random.Range(0, values.Count)];
     }
 
+	public static Vector3 offset(float xmin, float xmax, float ymin, float ymax)
+	{
+		return new Vector3(UnityEngine.Random.Range(xmin, xmax), 0, UnityEngine.Random.Range(ymin, ymax));
+	}
+
 }

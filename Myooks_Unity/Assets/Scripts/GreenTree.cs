@@ -16,6 +16,11 @@ public class GreenTree : MonoBehaviour {
     public Dictionary<Type , Queue<Resource>> _resources;
 	public List<Bug> _bugs;
 
+	private AudioSource _treeSounds;
+	[SerializeField]
+	private AudioClip _treeDie;
+	[SerializeField]
+	private AudioClip _leafDie;
 	public bugColor _color;
 	public List<bugColor> _activeColor;
 
@@ -99,6 +104,7 @@ public class GreenTree : MonoBehaviour {
 		if(_isDead)
 			return;
 		T newResource = Instantiate(_resourcePrefabs[typeof(T).ToString()], gameObject.transform).GetComponent<T>();
+		newResource.transform.position += Utility.offset(.1f,1.5f,.1f,1.5f);
 		newResource.make();
 		_resources[typeof(T)].Enqueue(newResource);
 	}
@@ -107,6 +113,11 @@ public class GreenTree : MonoBehaviour {
 	{
 		T toRemove = (T) _resources[typeof(T)].Dequeue();
 		toRemove.destroy();
+		if(typeof(T) == typeof(Leaf))
+		{
+			_treeSounds.clip = _leafDie;
+			_treeSounds.Play();
+		}
 	}
 
 	private void OnTriggerEnter (Collider other)
@@ -165,6 +176,8 @@ public class GreenTree : MonoBehaviour {
 			bug.killBug(false);
 		_isDead = true;
 		GetComponent<Animator>().SetBool("isDead", true);
+		_treeSounds.clip = _treeDie;
+		_treeSounds.Play();
 		StopCoroutine(LeafRegrowCheck());
 		for(int i = 0; i < getResourceNum(typeof(Nutrient)); i++)
 			removeResource<Nutrient>();

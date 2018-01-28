@@ -51,7 +51,7 @@ public class BugFactory : MonoBehaviour {
 			_bugTimer = 0;
 		}
 		if(_trees.Count <= 2)
-			UnityEngine.SceneManagement.SceneManager.LoadScene("gameOver");
+			UnityEngine.SceneManagement.SceneManager.LoadScene(Constants.GAME_OVER_SCREEN);
 	}
 
 	private void beginBugDrop()

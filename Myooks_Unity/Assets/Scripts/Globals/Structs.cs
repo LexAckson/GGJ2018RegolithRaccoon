@@ -25,3 +25,10 @@ public struct ResourcePrefab {
     public string name;
     public UnityEngine.GameObject stuff;
 }
+
+[System.Serializable]
+public struct soundPair
+{
+    public UnityEngine.AudioClip clip;
+    public string name;
+}

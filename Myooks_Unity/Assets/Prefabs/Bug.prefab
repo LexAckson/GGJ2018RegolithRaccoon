@@ -24,6 +24,7 @@ GameObject:
   - component: {fileID: 65131955607238992}
   - component: {fileID: 114907243960181472}
   - component: {fileID: 95138867731000114}
+  - component: {fileID: 82885431726256384}
   m_Layer: 10
   m_Name: Bug
   m_TagString: bug
@@ -69,8 +70,88 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 5, y: 5.000001, z: 1.3621683}
-  m_Center: {x: 0, y: -5.4289645e-16, z: -0.211797}
+  m_Size: {x: 3.6780908, y: 2.1956713, z: 1.3621683}
+  m_Center: {x: -0.28096378, y: -0.026394248, z: -0.211797}
+--- !u!82 &82885431726256384
+AudioSource:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1841089009084414}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 0}
+  m_PlayOnAwake: 0
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 2
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    - serializedVersion: 2
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 2
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 0
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 2
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 2
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 0
 --- !u!95 &95138867731000114
 Animator:
   serializedVersion: 3
@@ -103,6 +184,10 @@ MonoBehaviour:
   _targetTree: {fileID: 0}
   _isAttacked: 0
   _attackTimer: 0
+  _isDead: 0
+  _bugDie: {fileID: 8300000, guid: 5349bc8906d5c5e488c62ec50b8d2372, type: 3}
+  _bugMunch: {fileID: 8300000, guid: bd9f1e8abcc94754394ac026f74a1248, type: 3}
+  _bugExplode: {fileID: 8300000, guid: d9b49913980dc8942ac1685b50601f20, type: 3}
 --- !u!212 &212724860634447050
 SpriteRenderer:
   m_ObjectHideFlags: 1
