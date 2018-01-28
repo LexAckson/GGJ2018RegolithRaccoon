@@ -14,6 +14,7 @@ public class GreenTree : MonoBehaviour {
 	private List<ResourcePrefab> _resourcePrefabsList;
     private Dictionary<string, GameObject> _resourcePrefabs;
     public Dictionary<Type , Queue<Resource>> _resources;
+	public List<Bug> _bugs;
 
 	public bugColor _color;
 
@@ -28,6 +29,7 @@ public class GreenTree : MonoBehaviour {
             _resources[Type.GetType(r.name)] = new Queue<Resource>();
             _resourcePrefabs.Add(r.name, r.stuff);
         }
+		_bugs = new List<Bug>();
 		StartCoroutine(LeafRegrowCheck());
 	}
 	
@@ -84,7 +86,7 @@ public class GreenTree : MonoBehaviour {
 		_resources[typeof(T)].Enqueue(newResource);
 	}
 
-	private void removeResource<T> () where T : Resource
+	public void removeResource<T> () where T : Resource
 	{
 		T toRemove = (T) _resources[typeof(T)].Dequeue();
 		toRemove.destroy();
@@ -104,6 +106,16 @@ public class GreenTree : MonoBehaviour {
 		{
 			_inSun = false;
 		}
+	}
+
+	public void bugLanded(Bug bug)
+	{
+		_bugs.Add(bug);
+	}
+
+	public void killBug(Bug bug)
+	{
+		_bugs.Remove(bug);
 	}
 }
 
