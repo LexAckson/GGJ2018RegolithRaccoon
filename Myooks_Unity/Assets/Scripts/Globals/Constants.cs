@@ -12,9 +12,8 @@ public static class Constants
 	public const KeyCode MOVE_RIGHT = KeyCode.D;
 	public const KeyCode PIN_DROP = KeyCode.Q;
 	// vars
-	public const float MOVE_SPEED = 20f; 
+	public const float MOVE_SPEED = .2f; 
 	public const int NEEDLE_COUNT = 3;
-    public const float GROUND_RADIUS = 8f;
 
 	/// TREE CONSTS ///
 	public const float TREE_NUTRIENT_CHECK_TIMER = .5f; 
@@ -23,4 +22,12 @@ public static class Constants
 	public const float NUTRIENT_MAKE_TIMER = 2;
 	public const float NUTRIENT_CREATE_TIMER = .5f;
 	public const float NUTRIENT_SIZE = .5f;
+
+
+	/// TIME CONSTS ///
+	public const float DAY_LENGTH = 20f;
+	public const float BUG_DROP_TIME = ( 3f * DAY_LENGTH / 4f);
+	public const float BUG_SPAWN_TIME = (DAY_LENGTH / 2f);
+	public const float BUG_EAT_TIME = DAY_LENGTH / 4f;
+	public const float BUG_DIE_TIME = DAY_LENGTH / 4f;
 }
