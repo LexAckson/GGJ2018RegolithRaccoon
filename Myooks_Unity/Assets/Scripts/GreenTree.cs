@@ -6,7 +6,7 @@ using UnityEngine;
 public class GreenTree : MonoBehaviour {
 
 	[SerializeField]
-	private LeafAnims _allLeafSprites;
+	private TreeSpriteInfo _allTreeSpriteInfo;
 	[SerializeField]
 	private Sprite _leafSprite;
 	public int _toxins;
@@ -33,7 +33,9 @@ public class GreenTree : MonoBehaviour {
 		{
 			makeResource<Leaf>();
 		}
-		_leafSprite = _allLeafSprites.getSprite(_color, _resources[typeof(Leaf)].Count);
+		_leafSprite = _allTreeSpriteInfo.getSprite(_color, _resources[typeof(Leaf)].Count);
+		AnimatorOverrideController animatorOverrideController = new AnimatorOverrideController(_allTreeSpriteInfo.getAnimator(_color).runtimeAnimatorController);
+		GetComponent<Animator>().runtimeAnimatorController = animatorOverrideController;
 		_bugs = new List<Bug>();
 		StartCoroutine(LeafRegrowCheck());
 	}
@@ -128,7 +130,7 @@ public class GreenTree : MonoBehaviour {
 
 	private void updateLeafSprite()
 	{
-		_leafSprite = _allLeafSprites.getSprite(_color, _resources[typeof(Leaf)].Count);
+		_leafSprite = _allTreeSpriteInfo.getSprite(_color, _resources[typeof(Leaf)].Count);
 	}
 }
 

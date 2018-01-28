@@ -7,6 +7,13 @@ public struct leafSprites
 }
 
 [System.Serializable]
+public struct treeAnims
+{
+    public bugColor color;
+    public UnityEngine.Animator animator;
+}
+
+[System.Serializable]
 public struct ResourcePrefab {
     public string name;
     public UnityEngine.GameObject stuff;
