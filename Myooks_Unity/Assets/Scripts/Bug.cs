@@ -12,7 +12,10 @@ public class Bug : MonoBehaviour {
 	private bool _isLanded;
 	private Vector3 _startPos;
 	private bool _isBombKill;
+<<<<<<< HEAD
 	public bool _isDead;
+=======
+>>>>>>> 89769ca71ffd52b4544b5ad676bb976d35ac16e1
 	private Animator _anim;
 
 	public void Initialize(GreenTree targetTree, bugColor color, RuntimeAnimatorController animatorController, Sprite sprite)
@@ -81,6 +84,7 @@ public class Bug : MonoBehaviour {
 
 	private IEnumerator fall()
 	{
+<<<<<<< HEAD
 		Vector3 displacement = (Vector3.zero - transform.position) / 2;
 		Vector3 start = transform.position;
 		Vector3 target = transform.position + displacement;
@@ -91,6 +95,8 @@ public class Bug : MonoBehaviour {
 			timer += Time.deltaTime;
 			transform.position = Vector3.Lerp(start, target, timer / (Constants.BUG_DROP_TIME / 2));
 		}
+=======
+>>>>>>> 89769ca71ffd52b4544b5ad676bb976d35ac16e1
 		yield return null;
 	}
 
