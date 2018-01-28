@@ -90,8 +90,8 @@ public class PlayerController : MonoBehaviour {
             if ( _numPins == 0 )
             {
                 //mark the first mycellum in the queue for death and remove it
-                Mycelium myceliumToDie = _myceliumQueue.Dequeue();
-                myceliumToDie.MarkForDeath();
+                //Mycelium myceliumToDie = _myceliumQueue.Dequeue();
+                //myceliumToDie.MarkForDeath();
             }
         }
 	}
@@ -111,7 +111,8 @@ public class PlayerController : MonoBehaviour {
 	void OnTriggerEnter(Collider other)
 	{
         //can be a bug or a tree, save these to possibly drop pins
-        if (other.gameObject.CompareTag(Tags.TREE) || other.gameObject.CompareTag(Tags.BUG))
+        if (other.gameObject.CompareTag(Tags.TREE) || (other.gameObject.CompareTag(Tags.BUG) && 
+														other.gameObject.GetComponent<Bug>()._isDead))
 		{
 			_isTouchingTree = true;
 			_currentTree = other.gameObject;
@@ -121,7 +122,9 @@ public class PlayerController : MonoBehaviour {
 	void OnTriggerExit(Collider other)
 	{
         //can be a bug or a tree, save these to possibly drop pins
-        if (other.gameObject.CompareTag(Tags.TREE) || other.gameObject.CompareTag(Tags.BUG))
+        if (_isTouchingTree && 
+			(other.gameObject.CompareTag(Tags.TREE) || (other.gameObject.CompareTag(Tags.BUG) && 
+														other.gameObject.GetComponent<Bug>()._isDead) ))
 		{
 			_isTouchingTree = false;
 			_currentTree = null;

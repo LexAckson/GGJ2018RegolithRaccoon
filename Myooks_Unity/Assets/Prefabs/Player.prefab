@@ -38,7 +38,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1720454611790746}
   m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 0, y: 0.25, z: 7.16}
+  m_LocalPosition: {x: 0, y: -0.25, z: 7.16}
   m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_Children: []
   m_Father: {fileID: 0}
@@ -69,8 +69,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 5, y: 5.000001, z: 0.20000005}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Size: {x: 3.4891691, y: 4.3707337, z: 0.20000005}
+  m_Center: {x: -0.5144515, y: -0.042831182, z: -1.6457861e-16}
 --- !u!95 &95019348328190156
 Animator:
   serializedVersion: 3
@@ -101,7 +101,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _dude: {fileID: 0}
   _ground: {fileID: 0}
-  _myceliumPrefab: {fileID: 0}
+  _myceliumPrefab: {fileID: 1784828113960274, guid: 9101238b1e549b2488623392b410dd9a,
+    type: 2}
 --- !u!212 &212493209305701902
 SpriteRenderer:
   m_ObjectHideFlags: 1

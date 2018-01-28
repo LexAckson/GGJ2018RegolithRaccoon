@@ -136,13 +136,13 @@ public class Mycelium : MonoBehaviour {
             Dictionary<Type, int> gtStartResourceDict = gtStart.getResourceNum();
             Dictionary<Type, int> gtEndResourceDict = gtEnd.getResourceNum();
             int leafDiff = gtStartResourceDict[typeof(Leaf)] - gtEndResourceDict[typeof(Leaf)];
-            if (leafDiff > 0)
+            if (leafDiff > 0 && gtStartResourceDict[typeof(Nutrient)] > 0)
             {
                 //take a resource form the start tree
                 gtStart.removeResource<Nutrient>();
                 Debug.Log("FlowAction: Tree NUTRIENT give start!");
                 AddFlow("forward", bugColor.YELLOW, endObject, FlowAction.NUTRIENT);
-            } else if (leafDiff < 0)
+            } else if (leafDiff < 0 && gtEndResourceDict[typeof(Nutrient)] > 0)
             {
                 //take a resource form the end tree
                 gtEnd.removeResource<Nutrient>();
@@ -297,7 +297,7 @@ class Flow {
         currentProgress += 0.008f * change;
         //check to see if we should flag this flow as done
         isDone = change > 0 ? currentProgress > 1f : currentProgress < 0f;
-        if (isDone)
+        if(isDone)
             deliverAction();
         return currentProgress;
     }
@@ -308,7 +308,7 @@ class Flow {
         switch (fAction) {
             case FlowAction.BOMB:
                 Debug.Log("FlowAction: Bug BOMB finish!");
-                BugFactory.killAllBugsOfColor(target.GetComponent<Bug>()._color);
+                BugFactory.killAllBugsOfColor(target.GetComponent<Bug>()._color, true);
                 break;
             case FlowAction.DEFENSE:
                 target.GetComponent<GreenTree>().addColor(bugCol);

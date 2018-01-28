@@ -8,7 +8,7 @@ public class GreenTree : MonoBehaviour {
 	[SerializeField]
 	private TreeSpriteInfo _allTreeSpriteInfo;
 	[SerializeField]
-	private SpriteRenderer _leafSprite;
+	public SpriteRenderer _leafSprite;
 	public int _toxins;
 	[SerializeField]
 	private List<ResourcePrefab> _resourcePrefabsList;
@@ -37,7 +37,13 @@ public class GreenTree : MonoBehaviour {
 			makeResource<Leaf>();
 		}
 
-		StartCoroutine(waitToInit());
+		updateLeafSprite();
+		GetComponent<SpriteRenderer>().sprite = _allTreeSpriteInfo.getTreeSprite(_color);
+		AnimatorOverrideController animatorOverrideController = new AnimatorOverrideController(_allTreeSpriteInfo.getAnimator(_color));
+		GetComponent<Animator>().runtimeAnimatorController = animatorOverrideController;
+		_bugs = new List<Bug>();
+		_activeColor.Add(_color);
+		StartCoroutine(LeafRegrowCheck());
 		
 	}
 	
@@ -61,26 +67,12 @@ public class GreenTree : MonoBehaviour {
 		
 	}
 
-	private IEnumerator waitToInit()
-	{
-		while(!_allTreeSpriteInfo.isInit())
-		{
-			yield return null;
-		}
-		updateLeafSprite();
-		GetComponent<SpriteRenderer>().sprite = _allTreeSpriteInfo.getTreeSprite(_color);
-		AnimatorOverrideController animatorOverrideController = new AnimatorOverrideController(_allTreeSpriteInfo.getAnimator(_color));
-		GetComponent<Animator>().runtimeAnimatorController = animatorOverrideController;
-		_bugs = new List<Bug>();
-		_activeColor.Add(_color);
-		StartCoroutine(LeafRegrowCheck());
-	}
 	private IEnumerator LeafRegrowCheck()
 	{
 		while(true)
 		{
 			yield return new WaitForSeconds(Constants.TREE_NUTRIENT_CHECK_TIMER);
-			if(_resources[typeof(Leaf)].Count < Constants.LEAF_COUNT && _inSun)
+			if(_resources[typeof(Leaf)].Count < Constants.LEAF_COUNT && _inSun && getResourceNum(typeof(Nutrient)) > 0)
 			{
 				makeResource<Leaf>();
 				removeResource<Nutrient>();
@@ -105,7 +97,7 @@ public class GreenTree : MonoBehaviour {
 	{
 		if(_isDead)
 			return;
-		T newResource = Instantiate(_resourcePrefabs[typeof(T).ToString()]).GetComponent<T>();
+		T newResource = Instantiate(_resourcePrefabs[typeof(T).ToString()], gameObject.transform).GetComponent<T>();
 		newResource.make();
 		_resources[typeof(T)].Enqueue(newResource);
 	}

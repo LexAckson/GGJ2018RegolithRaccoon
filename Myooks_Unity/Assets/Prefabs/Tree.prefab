@@ -21,9 +21,13 @@ GameObject:
   - component: {fileID: 4476153195454842}
   - component: {fileID: 212040840161827656}
   - component: {fileID: 114121719780319152}
+  - component: {fileID: 54779429444185678}
+  - component: {fileID: 65287013825604770}
+  - component: {fileID: 114936708851019256}
+  - component: {fileID: 95477264287273782}
   m_Layer: 0
   m_Name: Tree
-  m_TagString: Untagged
+  m_TagString: tree
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -50,14 +54,14 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1742011284786650}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 2.9810042, y: 5.246175, z: -4.73}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalRotation: {x: 0.6929087, y: -0.1409885, z: 0.14098853, w: 0.6929084}
+  m_LocalPosition: {x: -7.379259, y: 2.3123205, z: 7.8248196}
+  m_LocalScale: {x: 0.61570454, y: 0.61570483, z: 0.6157047}
   m_Children:
   - {fileID: 4834875261744908}
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 90.00001, y: 0, z: 23.002}
 --- !u!4 &4834875261744908
 Transform:
   m_ObjectHideFlags: 1
@@ -71,6 +75,50 @@ Transform:
   m_Father: {fileID: 4476153195454842}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!54 &54779429444185678
+Rigidbody:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1742011284786650}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 0
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
+--- !u!65 &65287013825604770
+BoxCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1742011284786650}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 3.7506628, y: 9.999999, z: 1.1783462}
+  m_Center: {x: -0.6084248, y: 0.0000000097607, z: -0.4891731}
+--- !u!95 &95477264287273782
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1742011284786650}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 0}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
 --- !u!114 &114121719780319152
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -82,7 +130,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a7ae476a2fc379c47a147227d93a843b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _allTreeSpriteInfo: {fileID: 0}
+  _allTreeSpriteInfo: {fileID: 114936708851019256}
   _leafSprite: {fileID: 212989762988535652}
   _toxins: 0
   _resourcePrefabsList:
@@ -91,8 +139,52 @@ MonoBehaviour:
   - name: Leaf
     stuff: {fileID: 1919793255443800, guid: 47c37a1e33947864f9ee04c31d17e339, type: 2}
   _bugs: []
-  _color: 0
+  _color: 2
   _activeColor: 
+--- !u!114 &114936708851019256
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1742011284786650}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d7c5bad3bcf529043bff348ed154126b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _leafSprites:
+  - color: 1
+    sprites:
+    - {fileID: 21300006, guid: b76524d01dcb5e646aba552003d51ad0, type: 3}
+    - {fileID: 21300004, guid: b76524d01dcb5e646aba552003d51ad0, type: 3}
+    - {fileID: 21300002, guid: b76524d01dcb5e646aba552003d51ad0, type: 3}
+    - {fileID: 21300000, guid: b76524d01dcb5e646aba552003d51ad0, type: 3}
+  - color: 0
+    sprites:
+    - {fileID: 21300006, guid: fef0705c6c2407b4397427ddca80d6a2, type: 3}
+    - {fileID: 21300004, guid: fef0705c6c2407b4397427ddca80d6a2, type: 3}
+    - {fileID: 21300002, guid: fef0705c6c2407b4397427ddca80d6a2, type: 3}
+    - {fileID: 21300000, guid: fef0705c6c2407b4397427ddca80d6a2, type: 3}
+  - color: 2
+    sprites:
+    - {fileID: 21300006, guid: c7d8e1abc1b60ed4a9b8cf3db0e7b678, type: 3}
+    - {fileID: 21300004, guid: c7d8e1abc1b60ed4a9b8cf3db0e7b678, type: 3}
+    - {fileID: 21300002, guid: c7d8e1abc1b60ed4a9b8cf3db0e7b678, type: 3}
+    - {fileID: 21300000, guid: c7d8e1abc1b60ed4a9b8cf3db0e7b678, type: 3}
+  _treeAnimators:
+  - color: 0
+    animator: {fileID: 9100000, guid: 8f377619a45c57f45bdb2c257a8bf7c0, type: 2}
+  - color: 1
+    animator: {fileID: 9100000, guid: 90d718698261c954aba2643571e0023b, type: 2}
+  - color: 2
+    animator: {fileID: 9100000, guid: e1c25dc76cf9d61439e64df51d9d7d26, type: 2}
+  _treeSprites:
+  - color: 0
+    sprite: {fileID: 21300000, guid: 9e121203e15305745af745ab221e3427, type: 3}
+  - color: 1
+    sprite: {fileID: 21300000, guid: 2aa8c02a5b0b77847be9436a7fecedb7, type: 3}
+  - color: 2
+    sprite: {fileID: 21300000, guid: 60f9dd3072411ea44931da2e0d7df7b3, type: 3}
 --- !u!212 &212040840161827656
 SpriteRenderer:
   m_ObjectHideFlags: 1
