@@ -19,7 +19,7 @@ public class Mycelium : MonoBehaviour {
     private GradientAlphaKey[] myGAK;
 
     //destroy bugs events
-    public delegate void DestroyBugAction(Bug bugToDestroy);
+    public delegate void DestroyBugAction(Bug bugToDestroy, bool isBomb);
     public static event DestroyBugAction OnDestroyBug;
 
     public delegate void DestroyBugColorAction(bugColor bugColorToDestory);
@@ -217,7 +217,7 @@ public class Mycelium : MonoBehaviour {
 
                 }
                 //we will be destroying the bug
-                OnDestroyBug(myBug);
+                OnDestroyBug(myBug, true);
             }
 
         }

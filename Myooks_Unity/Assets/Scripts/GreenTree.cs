@@ -159,7 +159,7 @@ public class GreenTree : MonoBehaviour {
 	public void die()
 	{
 		foreach(Bug bug in _bugs)
-			bug.killBug();
+			bug.killBug(false);
 		_isDead = true;
 		GetComponent<Animator>().SetBool("isDead", true);
 		StopCoroutine(LeafRegrowCheck());

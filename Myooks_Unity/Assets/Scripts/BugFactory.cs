@@ -6,6 +6,8 @@ public class BugFactory : MonoBehaviour {
 
 	[SerializeField]
 	private static List<GreenTree> _trees;
+	[SerializeField]
+	private TreeSpriteInfo _bugSprites;
 
 	private float _bugTimer = 0;
 	private float _gameTimer = 0;
@@ -20,7 +22,7 @@ public class BugFactory : MonoBehaviour {
 			_bugDict.Add(color, new List<Bug>());
 		beginBugDrop();
 		Mycelium.OnDestroyBug += killBug;
-		Mycelium.OnDestroyBugColor += killAllBugsOfColor;
+		//Mycelium.OnDestroyBugColor += killAllBugsOfColor;
 	}
 	
 	void Update () 
@@ -46,7 +48,8 @@ public class BugFactory : MonoBehaviour {
 		Bug bug = Instantiate(_bugPrefab).GetComponent<Bug>();
 		bugColor newBugColor = getValidColor();
 		_bugDict[newBugColor].Add(bug);
-		bug.Initialize(selectTreeForDrop(bug, newBugColor, 0), newBugColor);
+		bug.Initialize(selectTreeForDrop(bug, newBugColor, 0), newBugColor, 
+				_bugSprites.getAnimator(newBugColor), _bugSprites.getTreeSprite(newBugColor));
 	}
 
 	private GreenTree selectTreeForDrop(Bug toDrop, bugColor color, int recurseLvl)
@@ -60,20 +63,20 @@ public class BugFactory : MonoBehaviour {
 		return selectedTree;
 	}
 
-	public static void killBug(Bug toKill)
+	public static void killBug(Bug toKill, bool isBomb = false)
 	{
 		_bugDict[toKill._color].Remove(toKill);
-		toKill.killBug();
+		toKill.killBug(isBomb);
 	}
 
-	public static void killAllBugsOfColor(bugColor color)
+	public static void killAllBugsOfColor(bugColor color, bool isBomb = false)
 	{
         List<Bug> bugsToKill = new List<Bug>();
         foreach (Bug bug in _bugDict[color])
 			bugsToKill.Add(bug);
         foreach (Bug bug in bugsToKill)
         {
-            killBug(bug);
+            killBug(bug, isBomb);
         }
 	}
 
