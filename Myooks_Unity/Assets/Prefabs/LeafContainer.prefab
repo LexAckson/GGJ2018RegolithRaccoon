@@ -77,3 +77,10 @@ MonoBehaviour:
     animator: {fileID: 9100000, guid: 90d718698261c954aba2643571e0023b, type: 2}
   - color: 2
     animator: {fileID: 9100000, guid: e1c25dc76cf9d61439e64df51d9d7d26, type: 2}
+  _treeSprites:
+  - color: 0
+    sprite: {fileID: 21300000, guid: 9e121203e15305745af745ab221e3427, type: 3}
+  - color: 1
+    sprite: {fileID: 21300000, guid: 2aa8c02a5b0b77847be9436a7fecedb7, type: 3}
+  - color: 2
+    sprite: {fileID: 21300000, guid: 60f9dd3072411ea44931da2e0d7df7b3, type: 3}

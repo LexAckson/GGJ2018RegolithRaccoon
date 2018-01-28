@@ -14,6 +14,13 @@ public struct treeAnims
 }
 
 [System.Serializable]
+public struct colorSpritePair
+{
+    public bugColor color;
+    public UnityEngine.Sprite sprite;
+}
+
+[System.Serializable]
 public struct ResourcePrefab {
     public string name;
     public UnityEngine.GameObject stuff;

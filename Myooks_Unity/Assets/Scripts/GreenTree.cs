@@ -8,7 +8,7 @@ public class GreenTree : MonoBehaviour {
 	[SerializeField]
 	private TreeSpriteInfo _allTreeSpriteInfo;
 	[SerializeField]
-	private Sprite _leafSprite;
+	private SpriteRenderer _leafSprite;
 	public int _toxins;
 	[SerializeField]
 	private List<ResourcePrefab> _resourcePrefabsList;
@@ -33,11 +33,9 @@ public class GreenTree : MonoBehaviour {
 		{
 			makeResource<Leaf>();
 		}
-		_leafSprite = _allTreeSpriteInfo.getSprite(_color, _resources[typeof(Leaf)].Count);
-		AnimatorOverrideController animatorOverrideController = new AnimatorOverrideController(_allTreeSpriteInfo.getAnimator(_color));
-		GetComponent<Animator>().runtimeAnimatorController = animatorOverrideController;
-		_bugs = new List<Bug>();
-		StartCoroutine(LeafRegrowCheck());
+
+		StartCoroutine(waitToInit());
+		
 	}
 	
 	void Update () 
@@ -57,6 +55,19 @@ public class GreenTree : MonoBehaviour {
 		
 	}
 
+	private IEnumerator waitToInit()
+	{
+		while(!_allTreeSpriteInfo.isInit())
+		{
+			yield return null;
+		}
+		updateLeafSprite();
+		GetComponent<SpriteRenderer>().sprite = _allTreeSpriteInfo.getTreeSprite(_color);
+		AnimatorOverrideController animatorOverrideController = new AnimatorOverrideController(_allTreeSpriteInfo.getAnimator(_color));
+		GetComponent<Animator>().runtimeAnimatorController = animatorOverrideController;
+		_bugs = new List<Bug>();
+		StartCoroutine(LeafRegrowCheck());
+	}
 	private IEnumerator LeafRegrowCheck()
 	{
 		while(true)
@@ -130,7 +141,7 @@ public class GreenTree : MonoBehaviour {
 
 	private void updateLeafSprite()
 	{
-		_leafSprite = _allTreeSpriteInfo.getSprite(_color, _resources[typeof(Leaf)].Count);
+		_leafSprite.sprite = _allTreeSpriteInfo.getSprite(_color, _resources[typeof(Leaf)].Count);
 	}
 }
 
