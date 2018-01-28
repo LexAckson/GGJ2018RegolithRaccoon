@@ -42,15 +42,15 @@ public class BugFactory : MonoBehaviour {
 		Bug bug = Instantiate(_bugPrefab).GetComponent<Bug>();
 		bugColor newBugColor = getValidColor();
 		_bugDict[newBugColor].Add(bug);
-		bug.Initialize(selectTreeForDrop(bug, newBugColor), newBugColor);
+		bug.Initialize(selectTreeForDrop(bug, newBugColor, 0), newBugColor);
 	}
 
-	private GreenTree selectTreeForDrop(Bug toDrop, bugColor color)
+	private GreenTree selectTreeForDrop(Bug toDrop, bugColor color, int recurseLvl)
 	{
 		GreenTree selectedTree = Utility.RandomValue<GreenTree>(_trees);
-		if(selectedTree._color == color)
+		if(selectedTree._color == color && recurseLvl <= 20)
 		{
-			return selectTreeForDrop(toDrop, color);
+			return selectTreeForDrop(toDrop, color, recurseLvl++);
 		}
 
 		return selectedTree;
