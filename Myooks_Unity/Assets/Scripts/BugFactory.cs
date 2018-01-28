@@ -68,8 +68,13 @@ public class BugFactory : MonoBehaviour {
 
 	public static void killAllBugsOfColor(bugColor color)
 	{
-		foreach(Bug bug in _bugDict[color])
-			killBug(bug);
+        List<Bug> bugsToKill = new List<Bug>();
+        foreach (Bug bug in _bugDict[color])
+			bugsToKill.Add(bug);
+        foreach (Bug bug in bugsToKill)
+        {
+            killBug(bug);
+        }
 	}
 
 	private bugColor getValidColor()
