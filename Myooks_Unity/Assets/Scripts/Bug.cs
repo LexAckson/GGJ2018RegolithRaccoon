@@ -41,6 +41,8 @@ public class Bug : MonoBehaviour {
 			_attackTimer+= Time.deltaTime;
 			if(_attackTimer >= Constants.BUG_DIE_TIME)
 			{
+                //TODO corpsify this bug, don't kill aka destroy it
+                //TODO make it fall somewhere
 				_isLanded = false;
 				_targetTree.killBug(this);
 				die();

@@ -51,7 +51,7 @@ public class PlayerController : MonoBehaviour {
 		{
 			if(!_isMycelliumMode)
 			{
-				_currentThread = Instantiate(_myceliumPrefab, _currentTree.transform).GetComponent<Mycelium>();
+				_currentThread = Instantiate(_myceliumPrefab, _dude.transform).GetComponent<Mycelium>();
 				_currentThread.Init(_currentTree, _dude);
 				_isMycelliumMode = true;
                 _myceliumQueue.Enqueue(_currentThread);
