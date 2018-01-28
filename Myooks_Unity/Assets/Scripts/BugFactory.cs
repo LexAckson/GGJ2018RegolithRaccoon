@@ -5,7 +5,7 @@ using UnityEngine;
 public class BugFactory : MonoBehaviour {
 
 	[SerializeField]
-	private List<GreenTree> _trees;
+	private static List<GreenTree> _trees;
 
 	private float _bugTimer = 0;
 	public int _bugsPerDrop = 2;
@@ -82,6 +82,12 @@ public class BugFactory : MonoBehaviour {
 			if(tree._color == color)
 				return true;
 		return false;
+	}
+
+	public static void deadTree(GreenTree tree)
+	{
+		_trees.Remove(tree);
+		tree.die();
 	}
 
 }
