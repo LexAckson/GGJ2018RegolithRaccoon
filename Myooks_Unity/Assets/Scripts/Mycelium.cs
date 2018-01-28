@@ -151,15 +151,19 @@ public class Mycelium : MonoBehaviour {
         {
             Dictionary<Type, int> gtStartResourceDict = gtStart.getResourceNum();
             Dictionary<Type, int> gtEndResourceDict = gtEnd.getResourceNum();
-            int nutrientDiff = gtStartResourceDict[typeof(Nutrient)] - gtEndResourceDict[typeof(Nutrient)];
-            if (nutrientDiff >= 2)
+            int leafDiff = gtStartResourceDict[typeof(Leaf)] - gtEndResourceDict[typeof(Leaf)];
+            if (leafDiff > 0)
             {
+                //take a resource form the start tree
                 gtStart.removeResource<Nutrient>();
-                gtEnd.makeResource<Nutrient>();
-            } else if (nutrientDiff <= -2)
+                Debug.Log("FlowAction: Tree NUTRIENT give start!");
+                AddFlow("forward", bugColor.YELLOW, endObject, FlowAction.NUTRIENT);
+            } else if (leafDiff < 0)
             {
+                //take a resource form the end tree
                 gtEnd.removeResource<Nutrient>();
-                gtStart.makeResource<Nutrient>();
+                Debug.Log("FlowAction: Tree NUTRIENT give start!");
+                AddFlow("backward", bugColor.YELLOW, startObject, FlowAction.NUTRIENT);
             }
 
         }
@@ -181,10 +185,9 @@ public class Mycelium : MonoBehaviour {
             if (startBug && endBug && startBug._color == endBug._color)
             {
                 //TODO Bug Bomb animation
-                Debug.Log("Bug BOMB!");
-                OnDestroyBugColor(startBug._color);
-                AddFlow("forward", startBug._color, endObject);
-                AddFlow("backward", startBug._color, startObject);
+                Debug.Log("FlowAction: Bug BOMB start!");
+                AddFlow("forward", startBug._color, endObject, FlowAction.BOMB);
+                AddFlow("backward", startBug._color, startObject, FlowAction.BOMB);
             }
             //check for trees
             GreenTree myTree = startObject.GetComponent<GreenTree>() != null ? startObject.GetComponent<GreenTree>() : endObject.GetComponent<GreenTree>();
@@ -194,24 +197,22 @@ public class Mycelium : MonoBehaviour {
                 //matched bug + tree for leaf
                 if (myTree._color == myBug._color)
                 {
-                    //TODO tell tree to grow leaf
-                    Debug.Log("Telling a tree to grow a leaf");
+                    Debug.Log("FlowAction: Tree LEAF grow start!");
                     if (startBug != null)
                     {
-                        AddFlow("forward", myBug._color, endObject);
+                        AddFlow("forward", myBug._color, endObject, FlowAction.LEAF);
                     }
                     else
                     {
-                        AddFlow("backward", myBug._color, startObject);
+                        AddFlow("backward", myBug._color, startObject, FlowAction.LEAF);
                     }
                 } //not matched bug + tree for defense
                 else {
-                    //TODO defend tree
-                    Debug.Log("Defend a tree");
+                    Debug.Log("FlowAction: Tree DEF start!");
                     if (startBug != null) {
-                        AddFlow("forward", myBug._color, endObject);
+                        AddFlow("forward", myBug._color, endObject, FlowAction.DEFENSE);
                     } else {
-                        AddFlow("backward", myBug._color, startObject);
+                        AddFlow("backward", myBug._color, startObject, FlowAction.DEFENSE);
                     }
 
                 }
@@ -268,10 +269,10 @@ public class Mycelium : MonoBehaviour {
         lineRenderer.colorGradient = myGradient;
     }
 
-    private void AddFlow(string direction, bugColor c, GameObject target)
+    private void AddFlow(string direction, bugColor c, GameObject target, FlowAction fAction)
     {
         Flow f = new Flow();
-        f.Init(direction, c, target);
+        f.Init(direction, c, target, fAction);
         myFlows.Add(f);
     }
 
@@ -286,14 +287,18 @@ class Flow {
     public float change = 1f;
     public bool isDone = false;
     public Color color;
+    //this will dictate the final action
+    private FlowAction fAction;
     public bugColor bugCol;
     public GameObject target;
 
-    public void Init(string direction, bugColor c, GameObject t)
+
+    public void Init(string direction, bugColor c, GameObject t, FlowAction f)
     {
         target = t;
         bugCol = c;
-        color = Constants.BUG_COLOR_LOOKUP[c];
+        fAction = f;
+        color = fAction == FlowAction.NUTRIENT ? Constants.BUG_COLOR_LOOKUP[c] : Color.green;
         if (direction != "forward")
         {
             change = -1f;
@@ -314,21 +319,25 @@ class Flow {
     //based on color and GameObject type, do stuff
     private void deliverAction()
     {
-        //if target is a tree
-        GreenTree myGT = target.GetComponent<GreenTree>();
-        if (myGT != null)
-        {
-            //same color grows a leaf
-            if (color == Constants.BUG_COLOR_LOOKUP[myGT._color] )
-            {
-                //grow a leaf
-                myGT.makeResource<Leaf>();
-            }
-            else //different color adds active color
-            {
-                myGT.addColor(bugCol); 
-            }
-            
+        switch (fAction) {
+            case FlowAction.BOMB:
+                Debug.Log("FlowAction: Bug BOMB finish!");
+                BugFactory.killAllBugsOfColor(target.GetComponent<Bug>()._color);
+                break;
+            case FlowAction.DEFENSE:
+                target.GetComponent<GreenTree>().addColor(bugCol);
+                Debug.Log("FlowAction: Tree DEF finish!");
+                break;
+            case FlowAction.LEAF:
+                target.GetComponent<GreenTree>().makeResource<Leaf>();
+                Debug.Log("FlowAction: Tree LEAF grow finish!");
+                break;
+            case FlowAction.NUTRIENT:
+                target.GetComponent<GreenTree>().makeResource<Nutrient>();
+                Debug.Log("FlowAction: Tree NUTRIENT give finish!");
+                break;
+            default:
+                break;
         }
     }
 }
