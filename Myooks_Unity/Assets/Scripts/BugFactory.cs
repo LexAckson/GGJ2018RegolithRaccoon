@@ -14,18 +14,14 @@ public class BugFactory : MonoBehaviour {
 	private float _gameTimer = 0;
 	public int _bugsPerDrop = 2;
 	public GameObject _bugPrefab;
-	private static Dictionary<bugColor, List<Bug>> _bugDict;
+	private static Dictionary<bugColor, List<Bug>> _staticBugDict;
 
 	void Start () 
 	{
 		foreach(GreenTree tree in _treesStart)
 			addTreeToList(tree);
-		_bugDict = new Dictionary<bugColor, List<Bug>>();
-		foreach(bugColor color in Utility.GetValues<bugColor>())
-			_bugDict.Add(color, new List<Bug>());
 		beginBugDrop();
 		Mycelium.OnDestroyBug += killBug;
-		//Mycelium.OnDestroyBugColor += killAllBugsOfColor;
 	}
 	
 	private static void addTreeToList(GreenTree tree)
@@ -33,6 +29,15 @@ public class BugFactory : MonoBehaviour {
 		if(_trees == null)
 			_trees = new List<GreenTree>();
 		_trees.Add(tree);
+	}
+
+	private static void addToStaticBugList(Bug bug, bugColor color)
+	{
+		if(_staticBugDict == null)
+			_staticBugDict = new Dictionary<bugColor, List<Bug>>();
+		if(!_staticBugDict.ContainsKey(color))
+			_staticBugDict.Add(color, new List<Bug>());
+		_staticBugDict[color].Add(bug);
 	}
 
 	void Update () 
@@ -57,11 +62,17 @@ public class BugFactory : MonoBehaviour {
 	{
 		Bug bug = Instantiate(_bugPrefab).GetComponent<Bug>();
 		bugColor newBugColor = getValidColor();
-		_bugDict[newBugColor].Add(bug);
+		addToStaticBugList(bug, newBugColor);
+		printDict();
 		bug.Initialize(selectTreeForDrop(bug, newBugColor, 0), newBugColor, 
 				_bugSprites.getAnimator(newBugColor), _bugSprites.getTreeSprite(newBugColor));
 	}
 
+	private static void printDict()
+	{
+		foreach(bugColor color in _staticBugDict.Keys)
+			Debug.Log(color.ToString() + ":" + _staticBugDict[color].Count);
+	}
 	private GreenTree selectTreeForDrop(Bug toDrop, bugColor color, int recurseLvl)
 	{
 		GreenTree selectedTree = Utility.RandomValue<GreenTree>(_trees);
@@ -73,21 +84,20 @@ public class BugFactory : MonoBehaviour {
 		return selectedTree;
 	}
 
-	public static void killBug(Bug toKill, bool isBomb = false)
-	{
-		_bugDict[toKill._color].Remove(toKill);
-		toKill.killBug(isBomb);
-	}
-
 	public static void killAllBugsOfColor(bugColor color, bool isBomb = false)
 	{
-        List<Bug> bugsToKill = new List<Bug>();
-        foreach (Bug bug in _bugDict[color])
-			bugsToKill.Add(bug);
-        foreach (Bug bug in bugsToKill)
-        {
-            killBug(bug, isBomb);
-        }
+        List<Bug> bugsToKill = _staticBugDict[color];
+		List<Bug> tmpList = new List<Bug>(bugsToKill);
+        for(int i=0; i < bugsToKill.Count; i++)
+		{
+			_staticBugDict[color].Remove(bugsToKill[i]);
+            tmpList[i].killBug(isBomb);
+		}
+	}
+
+	private void killBug(Bug bug, bool isBomb)
+	{
+		bug.killBug(isBomb);
 	}
 
 	private bugColor getValidColor()

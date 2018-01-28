@@ -313,6 +313,8 @@ class Flow {
         currentProgress += 0.008f * change;
         //check to see if we should flag this flow as done
         isDone = change > 0 ? currentProgress > 1f : currentProgress < 0f;
+        if(isDone)
+            deliverAction();
         return currentProgress;
     }
 
@@ -322,7 +324,7 @@ class Flow {
         switch (fAction) {
             case FlowAction.BOMB:
                 Debug.Log("FlowAction: Bug BOMB finish!");
-                BugFactory.killAllBugsOfColor(target.GetComponent<Bug>()._color);
+                BugFactory.killAllBugsOfColor(target.GetComponent<Bug>()._color, true);
                 break;
             case FlowAction.DEFENSE:
                 target.GetComponent<GreenTree>().addColor(bugCol);

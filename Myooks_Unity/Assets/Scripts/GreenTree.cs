@@ -37,7 +37,13 @@ public class GreenTree : MonoBehaviour {
 			makeResource<Leaf>();
 		}
 
-		StartCoroutine(waitToInit());
+		updateLeafSprite();
+		GetComponent<SpriteRenderer>().sprite = _allTreeSpriteInfo.getTreeSprite(_color);
+		AnimatorOverrideController animatorOverrideController = new AnimatorOverrideController(_allTreeSpriteInfo.getAnimator(_color));
+		GetComponent<Animator>().runtimeAnimatorController = animatorOverrideController;
+		_bugs = new List<Bug>();
+		_activeColor.Add(_color);
+		StartCoroutine(LeafRegrowCheck());
 		
 	}
 	
@@ -61,20 +67,6 @@ public class GreenTree : MonoBehaviour {
 		
 	}
 
-	private IEnumerator waitToInit()
-	{
-		while(!_allTreeSpriteInfo.isInit())
-		{
-			yield return null;
-		}
-		updateLeafSprite();
-		GetComponent<SpriteRenderer>().sprite = _allTreeSpriteInfo.getTreeSprite(_color);
-		AnimatorOverrideController animatorOverrideController = new AnimatorOverrideController(_allTreeSpriteInfo.getAnimator(_color));
-		GetComponent<Animator>().runtimeAnimatorController = animatorOverrideController;
-		_bugs = new List<Bug>();
-		_activeColor.Add(_color);
-		StartCoroutine(LeafRegrowCheck());
-	}
 	private IEnumerator LeafRegrowCheck()
 	{
 		while(true)

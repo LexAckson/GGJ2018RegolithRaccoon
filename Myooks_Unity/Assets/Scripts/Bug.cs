@@ -48,13 +48,9 @@ public class Bug : MonoBehaviour {
 			_isAttacked = _targetTree._activeColor.Contains(_color);
 
 			if(_isAttacked)
-			{
 				_attackTimer+= Time.deltaTime;
-				if(_attackTimer >= Constants.BUG_DIE_TIME)
-				{
-					killBug(false);
-				}
-			}
+			if(_attackTimer >= Constants.BUG_DIE_TIME)
+				killBug(false);
 		}
 	}
 
@@ -65,6 +61,14 @@ public class Bug : MonoBehaviour {
 		_targetTree.killBug(this);
 		_isDead = true;
 		_anim.SetBool("isDead", true);
+		if(isBomb)
+			StartCoroutine(deadBug());
+	}
+
+	IEnumerator deadBug()
+	{
+		yield return new WaitForSeconds(.3f);
+		Destroy(this.gameObject);
 	}
 
 	void die()
@@ -77,10 +81,10 @@ public class Bug : MonoBehaviour {
 
 	private IEnumerator fall()
 	{
-		Vector3 displacement = 2 * (Vector3.zero - transform.position.normalized);
+		Vector3 displacement = (Vector3.zero - transform.position) / 2;
 		Vector3 start = transform.position;
 		Vector3 target = transform.position + displacement;
-		target.y = -.15f;
+		target.y = 0;
 		float timer = 0;
 		while(timer / (Constants.BUG_DROP_TIME / 2) < 1)
 		{
@@ -96,7 +100,7 @@ public class Bug : MonoBehaviour {
 		while(timer / Constants.BUG_DROP_TIME < 1)
 		{
 			timer += Time.deltaTime;
-			transform.position = Vector3.Lerp(_startPos, _targetTree._leafSprite.gameObject.transform.position + (Vector3.up * .02f), timer / Constants.BUG_DROP_TIME);
+			transform.position = Vector3.Lerp(_startPos, _targetTree._leafSprite.gameObject.transform.position + (Vector3.up * .2f), timer / Constants.BUG_DROP_TIME);
 			yield return null;
 		}
 		_isLanded = true;
