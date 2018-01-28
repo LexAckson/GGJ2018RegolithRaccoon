@@ -15,6 +15,8 @@ public class BugFactory : MonoBehaviour {
 	void Start () 
 	{
 		_bugDict = new Dictionary<bugColor, List<Bug>>();
+		foreach(bugColor color in Utility.GetValues<bugColor>())
+			_bugDict.Add(color, new List<Bug>());
 		beginBugDrop();
 		Mycelium.OnDestroyBug += killBug;
 		Mycelium.OnDestroyBugColor += killAllBugsOfColor;
@@ -39,17 +41,16 @@ public class BugFactory : MonoBehaviour {
 	{
 		Bug bug = Instantiate(_bugPrefab).GetComponent<Bug>();
 		bugColor newBugColor = Utility.getRandomEnum<bugColor>();
-		bug.setColor(newBugColor);
 		_bugDict[newBugColor].Add(bug);
-		bug.setTargetTree(selectTreeForDrop(bug));
+		bug.Initialize(selectTreeForDrop(bug, newBugColor), newBugColor);
 	}
 
-	private GreenTree selectTreeForDrop(Bug toDrop)
+	private GreenTree selectTreeForDrop(Bug toDrop, bugColor color)
 	{
 		GreenTree selectedTree = Utility.RandomValue<GreenTree>(_trees);
-		if(selectedTree._color == toDrop._color)
+		if(selectedTree._color == color)
 		{
-			return selectTreeForDrop(toDrop);
+			return selectTreeForDrop(toDrop, color);
 		}
 
 		return selectedTree;

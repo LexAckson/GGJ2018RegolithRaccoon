@@ -11,15 +11,18 @@ public class Bug : MonoBehaviour {
 	private float _eatTimer;
 	private bool _isLanded;
 	private Vector3 _startPos;
-	void Start () 
+	private bool _isInit;
+
+	public void Initialize(GreenTree targetTree, bugColor color)
 	{
-		transform.position = _targetTree.transform.position + 
-				_targetTree.transform.position.normalized * Constants.BUG_START_DIST; 
+		_targetTree = targetTree;
+		_color = color;
+		transform.position = _targetTree.transform.position 
+				+ _targetTree.transform.position.normalized * Constants.BUG_START_DIST;
 		_startPos = transform.position;
+		_isInit = true;
 		StartCoroutine(land());
-		
 	}
-	
 	// Update is called once per frame
 	void Update () 
 	{
@@ -62,13 +65,5 @@ public class Bug : MonoBehaviour {
 		}
 		_isLanded = true;
 	}
-	public void setColor(bugColor color)
-	{
-		_color = color;
-	}
 
-	public void setTargetTree(GreenTree tree)
-	{
-		_targetTree = tree;
-	}
 }
