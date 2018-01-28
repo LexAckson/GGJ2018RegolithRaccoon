@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour {
 
-	[SerializeField]
+	private Camera _toRotate;
 	private GameObject _dude;
 	[SerializeField]
 	private GameObject _ground;
@@ -16,6 +16,7 @@ public class PlayerController : MonoBehaviour {
 	private GameObject _currentTree;
     private Queue<Mycelium> _myceliumQueue = new Queue<Mycelium>();
 	private Mycelium _currentThread;
+	private List<Mycelium> _threadList;
 	private bool _isMycelliumMode;
 	private int _numPins = Constants.NEEDLE_COUNT;
 	private bool _pinDrop;
@@ -24,7 +25,9 @@ public class PlayerController : MonoBehaviour {
     private void Start()
     {
 		_anim = GetComponent<Animator>();
+		_toRotate = Camera.main;
         _dude = gameObject;
+		_threadList = new List<Mycelium>();
     }
 
     void Update () {
@@ -37,12 +40,14 @@ public class PlayerController : MonoBehaviour {
 			if(Input.GetAxis(Constants.HORIZONTAL_AXIS) < 0)
 			{
 				_dude.transform.RotateAround(_ground.transform.position, Vector3.up, -Constants.MOVE_SPEED * Time.deltaTime * (3f + Constants.GROUND_RADIUS - _dude.transform.position.magnitude) );
+				_toRotate.transform.RotateAround(_ground.transform.position, Vector3.up, -Constants.MOVE_SPEED * Time.deltaTime * (3f + Constants.GROUND_RADIUS - _dude.transform.position.magnitude) );
 				if(_isFacingClockwise)
 					changeDirection();
 			}
 			if(Input.GetAxis(Constants.HORIZONTAL_AXIS) > 0)
 			{
 				_dude.transform.RotateAround(_ground.transform.position, Vector3.up, Constants.MOVE_SPEED * Time.deltaTime * (3f + Constants.GROUND_RADIUS - _dude.transform.position.magnitude) );
+				_toRotate.transform.RotateAround(_ground.transform.position, Vector3.up, Constants.MOVE_SPEED * Time.deltaTime * (3f + Constants.GROUND_RADIUS - _dude.transform.position.magnitude) );
 				if(!_isFacingClockwise)
 					changeDirection();
 			}
@@ -72,13 +77,22 @@ public class PlayerController : MonoBehaviour {
 		{
 			_pinDrop = true;
 			_anim.SetBool("isDropPin", _pinDrop);
+			checkMycelium();
 			if(!_isMycelliumMode)
 			{
+				if ( _numPins == 0 )
+            	{
+					//mark the first mycellum in the queue for death and remove it
+					_threadList[0].MarkForDeath();
+					_threadList.RemoveAt(0);
+            	}
 				_currentThread = Instantiate(_myceliumPrefab, _dude.transform).GetComponent<Mycelium>();
 				_currentThread.Init(_currentTree, _dude);
 				_isMycelliumMode = true;
-                _myceliumQueue.Enqueue(_currentThread);
-			} //don't attach a tree to itself
+				_threadList.Add(_currentThread);
+			} 
+			
+			//don't attach a tree to itself
 			else if (_currentThread.startObject != _currentTree)
 			{
 				_currentThread.endObject = _currentTree;
@@ -87,15 +101,16 @@ public class PlayerController : MonoBehaviour {
 				_isMycelliumMode = false;
 			}
 
-            if ( _numPins == 0 )
-            {
-                //mark the first mycellum in the queue for death and remove it
-                //Mycelium myceliumToDie = _myceliumQueue.Dequeue();
-                //myceliumToDie.MarkForDeath();
-            }
+            
         }
 	}
 
+	private void checkMycelium()
+	{
+		int oldSize = _threadList.Count;
+		_threadList.RemoveAll(item => item==null);
+		_numPins += oldSize - _threadList.Count;
+	}
 	public bool isPointingIn(Vector3 inputAxis)
 	{
 		// Vector3 toCenter = _dude.transform.position - _ground.transform.position;

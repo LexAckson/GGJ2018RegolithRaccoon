@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class BugFactory : MonoBehaviour {
 
+	
 	[SerializeField]
 	private List<GreenTree> _treesStart;
 	private static List<GreenTree> _trees;

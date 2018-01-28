@@ -295,7 +295,7 @@ class Flow {
         target = t;
         bugCol = c;
         fAction = f;
-        color = fAction == FlowAction.NUTRIENT ? Constants.BUG_COLOR_LOOKUP[c] : Color.green;
+        color = fAction == FlowAction.NUTRIENT ?  Color.green : Constants.BUG_COLOR_LOOKUP[c];
         if (direction != "forward")
         {
             change = -1f;
@@ -307,7 +307,7 @@ class Flow {
     public float TakeAStep() {
         //update progress
         //Time.deltaTime was going bonkers here, so just change at a fixed rate per frame
-        currentProgress += 0.008f * change;
+        currentProgress += 0.004f * change;
         //check to see if we should flag this flow as done
         isDone = change > 0 ? currentProgress > 1f : currentProgress < 0f;
         if(isDone)

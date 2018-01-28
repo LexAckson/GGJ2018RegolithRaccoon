@@ -57,7 +57,8 @@ public class Bug : MonoBehaviour {
 		_isLanded = false;
 		_isBombKill = isBomb;
 		_isDead = true;
-		_anim.SetBool("isDead", true);
+		if(_anim != null)
+			_anim.SetBool("isDead", true);
 		if(isBomb)
 			StartCoroutine(deadBug());
 	}

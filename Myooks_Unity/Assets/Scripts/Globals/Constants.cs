@@ -24,7 +24,7 @@ public static class Constants
     public const float NUTRIENT_ABSORB_TIME = 1;
     public const float NUTRIENT_MAKE_TIMER = 2;
     public const float NUTRIENT_CREATE_TIMER = .5f;
-    public const float NUTRIENT_SIZE = .5f;
+    public const float NUTRIENT_SIZE = 2f;
     public const float BUG_START_DIST = 3f;
 
     /// TIME CONSTS ///
