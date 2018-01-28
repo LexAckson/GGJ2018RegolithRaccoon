@@ -5,7 +5,10 @@ using UnityEngine;
 public class BugFactory : MonoBehaviour {
 
 	[SerializeField]
+	private List<GreenTree> _treesStart;
 	private static List<GreenTree> _trees;
+	[SerializeField]
+	private TreeSpriteInfo _bugSprites;
 
 	private float _bugTimer = 0;
 	private float _gameTimer = 0;
@@ -15,14 +18,23 @@ public class BugFactory : MonoBehaviour {
 
 	void Start () 
 	{
+		foreach(GreenTree tree in _treesStart)
+			addTreeToList(tree);
 		_bugDict = new Dictionary<bugColor, List<Bug>>();
 		foreach(bugColor color in Utility.GetValues<bugColor>())
 			_bugDict.Add(color, new List<Bug>());
 		beginBugDrop();
 		Mycelium.OnDestroyBug += killBug;
-		Mycelium.OnDestroyBugColor += killAllBugsOfColor;
+		//Mycelium.OnDestroyBugColor += killAllBugsOfColor;
 	}
 	
+	private static void addTreeToList(GreenTree tree)
+	{
+		if(_trees == null)
+			_trees = new List<GreenTree>();
+		_trees.Add(tree);
+	}
+
 	void Update () 
 	{
 		_gameTimer += Time.deltaTime;
@@ -46,7 +58,8 @@ public class BugFactory : MonoBehaviour {
 		Bug bug = Instantiate(_bugPrefab).GetComponent<Bug>();
 		bugColor newBugColor = getValidColor();
 		_bugDict[newBugColor].Add(bug);
-		bug.Initialize(selectTreeForDrop(bug, newBugColor, 0), newBugColor);
+		bug.Initialize(selectTreeForDrop(bug, newBugColor, 0), newBugColor, 
+				_bugSprites.getAnimator(newBugColor), _bugSprites.getTreeSprite(newBugColor));
 	}
 
 	private GreenTree selectTreeForDrop(Bug toDrop, bugColor color, int recurseLvl)
@@ -60,20 +73,20 @@ public class BugFactory : MonoBehaviour {
 		return selectedTree;
 	}
 
-	public static void killBug(Bug toKill)
+	public static void killBug(Bug toKill, bool isBomb = false)
 	{
 		_bugDict[toKill._color].Remove(toKill);
-		toKill.killBug();
+		toKill.killBug(isBomb);
 	}
 
-	public static void killAllBugsOfColor(bugColor color)
+	public static void killAllBugsOfColor(bugColor color, bool isBomb = false)
 	{
         List<Bug> bugsToKill = new List<Bug>();
         foreach (Bug bug in _bugDict[color])
 			bugsToKill.Add(bug);
         foreach (Bug bug in bugsToKill)
         {
-            killBug(bug);
+            killBug(bug, isBomb);
         }
 	}
 

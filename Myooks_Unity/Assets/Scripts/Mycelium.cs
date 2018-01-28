@@ -19,7 +19,7 @@ public class Mycelium : MonoBehaviour {
     private GradientAlphaKey[] myGAK;
 
     //destroy bugs events
-    public delegate void DestroyBugAction(Bug bugToDestroy);
+    public delegate void DestroyBugAction(Bug bugToDestroy, bool isBomb);
     public static event DestroyBugAction OnDestroyBug;
 
     public delegate void DestroyBugColorAction(bugColor bugColorToDestory);
@@ -152,13 +152,13 @@ public class Mycelium : MonoBehaviour {
             Dictionary<Type, int> gtStartResourceDict = gtStart.getResourceNum();
             Dictionary<Type, int> gtEndResourceDict = gtEnd.getResourceNum();
             int leafDiff = gtStartResourceDict[typeof(Leaf)] - gtEndResourceDict[typeof(Leaf)];
-            if (leafDiff > 0)
+            if (leafDiff > 0 && gtStartResourceDict[typeof(Nutrient)] > 0)
             {
                 //take a resource form the start tree
                 gtStart.removeResource<Nutrient>();
                 Debug.Log("FlowAction: Tree NUTRIENT give start!");
                 AddFlow("forward", bugColor.YELLOW, endObject, FlowAction.NUTRIENT);
-            } else if (leafDiff < 0)
+            } else if (leafDiff < 0 && gtEndResourceDict[typeof(Nutrient)] > 0)
             {
                 //take a resource form the end tree
                 gtEnd.removeResource<Nutrient>();
@@ -217,7 +217,7 @@ public class Mycelium : MonoBehaviour {
 
                 }
                 //we will be destroying the bug
-                OnDestroyBug(myBug);
+                OnDestroyBug(myBug, true);
             }
 
         }

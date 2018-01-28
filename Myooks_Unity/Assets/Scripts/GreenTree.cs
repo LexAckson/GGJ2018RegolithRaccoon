@@ -8,7 +8,7 @@ public class GreenTree : MonoBehaviour {
 	[SerializeField]
 	private TreeSpriteInfo _allTreeSpriteInfo;
 	[SerializeField]
-	private SpriteRenderer _leafSprite;
+	public SpriteRenderer _leafSprite;
 	public int _toxins;
 	[SerializeField]
 	private List<ResourcePrefab> _resourcePrefabsList;
@@ -80,7 +80,7 @@ public class GreenTree : MonoBehaviour {
 		while(true)
 		{
 			yield return new WaitForSeconds(Constants.TREE_NUTRIENT_CHECK_TIMER);
-			if(_resources[typeof(Leaf)].Count < Constants.LEAF_COUNT && _inSun)
+			if(_resources[typeof(Leaf)].Count < Constants.LEAF_COUNT && _inSun && getResourceNum(typeof(Nutrient)) > 0)
 			{
 				makeResource<Leaf>();
 				removeResource<Nutrient>();
@@ -105,7 +105,7 @@ public class GreenTree : MonoBehaviour {
 	{
 		if(_isDead)
 			return;
-		T newResource = Instantiate(_resourcePrefabs[typeof(T).ToString()]).GetComponent<T>();
+		T newResource = Instantiate(_resourcePrefabs[typeof(T).ToString()], gameObject.transform).GetComponent<T>();
 		newResource.make();
 		_resources[typeof(T)].Enqueue(newResource);
 	}
@@ -159,7 +159,7 @@ public class GreenTree : MonoBehaviour {
 	public void die()
 	{
 		foreach(Bug bug in _bugs)
-			bug.killBug();
+			bug.killBug(false);
 		_isDead = true;
 		GetComponent<Animator>().SetBool("isDead", true);
 		StopCoroutine(LeafRegrowCheck());
