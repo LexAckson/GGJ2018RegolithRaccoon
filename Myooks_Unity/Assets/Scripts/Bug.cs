@@ -45,8 +45,6 @@ public class Bug : MonoBehaviour {
 				_eatTimer = 0;
 			}
 		
-			_isAttacked = _targetTree._activeColor.Contains(_color);
-
 			if(_isAttacked)
 				_attackTimer+= Time.deltaTime;
 			if(_attackTimer >= Constants.BUG_DIE_TIME)
@@ -58,7 +56,6 @@ public class Bug : MonoBehaviour {
 	{
 		_isLanded = false;
 		_isBombKill = isBomb;
-		_targetTree.killBug(this);
 		_isDead = true;
 		_anim.SetBool("isDead", true);
 		if(isBomb)
@@ -104,6 +101,7 @@ public class Bug : MonoBehaviour {
 			yield return null;
 		}
 		_isLanded = true;
+		_targetTree.bugLanded(this);
 		_anim.SetBool("isOnTree", true);
 	}
 

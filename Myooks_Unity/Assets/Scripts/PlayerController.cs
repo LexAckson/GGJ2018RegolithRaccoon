@@ -27,7 +27,7 @@ public class PlayerController : MonoBehaviour {
         _dude = gameObject;
     }
 
-    void LateUpdate () {
+    void Update () {
 		if (Input.GetKey("escape"))
             Application.Quit();
 		if(Input.GetKey(Constants.RESTART_KEY))
@@ -36,22 +36,22 @@ public class PlayerController : MonoBehaviour {
 		{
 			if(Input.GetAxis(Constants.HORIZONTAL_AXIS) < 0)
 			{
-				_dude.transform.RotateAround(_ground.transform.position, Vector3.up, -Constants.MOVE_SPEED * Time.deltaTime * (1f + Constants.GROUND_RADIUS - _dude.transform.position.magnitude) );
+				_dude.transform.RotateAround(_ground.transform.position, Vector3.up, -Constants.MOVE_SPEED * Time.deltaTime * (3f + Constants.GROUND_RADIUS - _dude.transform.position.magnitude) );
 				if(_isFacingClockwise)
 					changeDirection();
 			}
 			if(Input.GetAxis(Constants.HORIZONTAL_AXIS) > 0)
 			{
-				_dude.transform.RotateAround(_ground.transform.position, Vector3.up, Constants.MOVE_SPEED * Time.deltaTime * (1f + Constants.GROUND_RADIUS - _dude.transform.position.magnitude) );
+				_dude.transform.RotateAround(_ground.transform.position, Vector3.up, Constants.MOVE_SPEED * Time.deltaTime * (3f + Constants.GROUND_RADIUS - _dude.transform.position.magnitude) );
 				if(!_isFacingClockwise)
 					changeDirection();
 			}
 			Vector3 toCenter = (_dude.transform.position - _ground.transform.position).normalized;
 
 			if (Input.GetAxis(Constants.VERTICAL_AXIS) < 0)
-				_dude.transform.position = Vector3.MoveTowards(_dude.transform.position, Vector3.zero, Constants.MOVE_SPEED * 0.2f * Time.deltaTime);
+				_dude.transform.position = Vector3.MoveTowards(_dude.transform.position, Vector3.zero, Constants.MOVE_SPEED * 0.5f * Time.deltaTime);
 			if (Input.GetAxis(Constants.VERTICAL_AXIS) > 0)
-				_dude.transform.position = Vector3.MoveTowards(_dude.transform.position, Vector3.zero, -Constants.MOVE_SPEED * 0.2f * Time.deltaTime);
+				_dude.transform.position = Vector3.MoveTowards(_dude.transform.position, Vector3.zero, -Constants.MOVE_SPEED * 0.5f * Time.deltaTime);
 
 			if(Input.GetAxis(Constants.VERTICAL_AXIS) == 0 && Input.GetAxis(Constants.HORIZONTAL_AXIS) == 0)
 				_anim.SetBool("isMoving", false);
@@ -60,8 +60,8 @@ public class PlayerController : MonoBehaviour {
 		}
 
         //don't go to far to the center
-        if (_dude.transform.position.magnitude < 1f)
-            _dude.transform.position = _dude.transform.position.normalized;
+        if (_dude.transform.position.magnitude < 2f)
+            _dude.transform.position = _dude.transform.position.normalized * 2f;
         //don't go off the planet
         if (_dude.transform.position.magnitude > Constants.GROUND_RADIUS)
             _dude.transform.position = _dude.transform.position.normalized * Constants.GROUND_RADIUS;

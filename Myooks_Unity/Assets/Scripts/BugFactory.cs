@@ -63,16 +63,10 @@ public class BugFactory : MonoBehaviour {
 		Bug bug = Instantiate(_bugPrefab).GetComponent<Bug>();
 		bugColor newBugColor = getValidColor();
 		addToStaticBugList(bug, newBugColor);
-		printDict();
 		bug.Initialize(selectTreeForDrop(bug, newBugColor, 0), newBugColor, 
 				_bugSprites.getAnimator(newBugColor), _bugSprites.getTreeSprite(newBugColor));
 	}
 
-	private static void printDict()
-	{
-		foreach(bugColor color in _staticBugDict.Keys)
-			Debug.Log(color.ToString() + ":" + _staticBugDict[color].Count);
-	}
 	private GreenTree selectTreeForDrop(Bug toDrop, bugColor color, int recurseLvl)
 	{
 		GreenTree selectedTree = Utility.RandomValue<GreenTree>(_trees);
@@ -86,12 +80,12 @@ public class BugFactory : MonoBehaviour {
 
 	public static void killAllBugsOfColor(bugColor color, bool isBomb = false)
 	{
-        List<Bug> bugsToKill = _staticBugDict[color];
-		List<Bug> tmpList = new List<Bug>(bugsToKill);
+        List<Bug> bugsToKill = new List<Bug>(_staticBugDict[color]);
+		_staticBugDict[color] = new List<Bug>();
         for(int i=0; i < bugsToKill.Count; i++)
 		{
-			_staticBugDict[color].Remove(bugsToKill[i]);
-            tmpList[i].killBug(isBomb);
+			Bug b = bugsToKill[i];
+            b.killBug(isBomb);
 		}
 	}
 

@@ -14,7 +14,7 @@ public static class Constants
     public const KeyCode PIN_DROP = KeyCode.Q;
     public const KeyCode RESTART_KEY = KeyCode.Backspace;
     // vars
-    public const float MOVE_SPEED = 20f;
+    public const float MOVE_SPEED = 17f;
     public const int NEEDLE_COUNT = 3;
     public const float GROUND_RADIUS = 8f;
 

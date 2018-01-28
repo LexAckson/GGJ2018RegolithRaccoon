@@ -102,7 +102,6 @@ public class Mycelium : MonoBehaviour {
 
     private void DrawMycelium()
     {
-        Debug.Log("Drawing");
         //reset the colors cause we can be fading or doing effects
         FillGradientKeys();
         int numberOfEndpoints = 0;
@@ -164,6 +163,19 @@ public class Mycelium : MonoBehaviour {
                 gtEnd.removeResource<Nutrient>();
                 Debug.Log("FlowAction: Tree NUTRIENT give start!");
                 AddFlow("backward", bugColor.YELLOW, startObject, FlowAction.NUTRIENT);
+            }
+
+            bool hasDefense = false;
+            foreach(Flow f in myFlows)
+                if(f.fAction == FlowAction.DEFENSE)
+                    hasDefense = true;
+                    
+            if(!hasDefense)
+            {
+                if(!gtEnd._activeColor.Contains(gtStart._color))
+                    AddFlow("forward", gtStart._color, endObject, FlowAction.DEFENSE);
+                if(!gtStart._activeColor.Contains(gtEnd._color))
+                    AddFlow("backward", gtEnd._color, startObject, FlowAction.DEFENSE);
             }
 
         }
@@ -288,7 +300,7 @@ class Flow {
     public bool isDone = false;
     public Color color;
     //this will dictate the final action
-    private FlowAction fAction;
+    public FlowAction fAction;
     public bugColor bugCol;
     public GameObject target;
 

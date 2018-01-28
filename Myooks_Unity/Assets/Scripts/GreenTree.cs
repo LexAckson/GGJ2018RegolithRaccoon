@@ -64,6 +64,7 @@ public class GreenTree : MonoBehaviour {
 			makeResource<Nutrient>();
 		}
 		updateLeafSprite();
+		_bugs.RemoveAll(item => item==null);
 		
 	}
 
@@ -126,22 +127,32 @@ public class GreenTree : MonoBehaviour {
 	public void addColor(bugColor color)
 	{
 		_activeColor.Add(color);
+		updateAttacks();
 	}
 
 	public void removeColor(bugColor color)
 	{
 		_activeColor.Remove(color);
+		updateAttacks();
 	}
+
+	
 
 	public void bugLanded(Bug bug)
 	{
 		_bugs.Add(bug);
+		updateAttacks();
 	}
 
-	public void killBug(Bug bug)
+
+	private void updateAttacks()
 	{
-		_bugs.Remove(bug);
+		foreach(Bug bug in _bugs)
+		{
+			bug._isAttacked = _activeColor.Contains(bug._color);
+		}
 	}
+
 
 	private void updateLeafSprite()
 	{
