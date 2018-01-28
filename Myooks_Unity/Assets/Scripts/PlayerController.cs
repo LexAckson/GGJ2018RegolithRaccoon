@@ -55,10 +55,11 @@ public class PlayerController : MonoBehaviour {
 
 	public bool isPointingIn(Vector3 inputAxis)
 	{
-		Vector3 toCenter = _dude.transform.position - _ground.transform.position;
-		float angleDiff = Vector3.Dot(toCenter,inputAxis);
+		// Vector3 toCenter = _dude.transform.position - _ground.transform.position;
+		// float angleDiff = Vector3.Dot(toCenter,inputAxis);
 
-		return angleDiff < -.85f;
+		// return angleDiff < -.85f;
+		return false;
 
 	}
 
