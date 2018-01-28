@@ -10,6 +10,7 @@ public static class Utility
 		float timer = 0;
 		while(timer/endTime < 1)
 		{
+			timer += Time.deltaTime;
 			float newScale = Mathf.Lerp(startScale, endScale, timer/endTime);
 			toScale.transform.localScale = new Vector3(newScale, newScale, newScale);
 			yield return null;			
