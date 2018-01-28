@@ -7,7 +7,6 @@ public class GreenTree : MonoBehaviour {
 
 	[SerializeField]
 	private GameObject _leafPrefab;
-	public int _leaves;
 	
 	public int _toxins;
 	[SerializeField]
@@ -29,6 +28,10 @@ public class GreenTree : MonoBehaviour {
             _resources[Type.GetType(r.name)] = new Queue<Resource>();
             _resourcePrefabs.Add(r.name, r.stuff);
         }
+		for(int i = 0; i < Constants.LEAF_COUNT; i++)
+		{
+			makeResource<Leaf>();
+		}
 		_bugs = new List<Bug>();
 		StartCoroutine(LeafRegrowCheck());
 	}
@@ -52,10 +55,10 @@ public class GreenTree : MonoBehaviour {
 		while(true)
 		{
 			yield return new WaitForSeconds(Constants.TREE_NUTRIENT_CHECK_TIMER);
-			if(_leaves < Constants.LEAF_COUNT)
+			if(_resources[typeof(Leaf)].Count < Constants.LEAF_COUNT)
 			{
 				// TODO: do regrow animation
-				_leaves++;
+				makeResource<Leaf>();
 				removeResource<Nutrient>();
 			}
 		}
