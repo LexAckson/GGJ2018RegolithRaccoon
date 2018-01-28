@@ -23,6 +23,7 @@ GameObject:
   - component: {fileID: 64729127358967168}
   - component: {fileID: 23437177488870414}
   - component: {fileID: 114175097397496868}
+  - component: {fileID: 114658284629098470}
   m_Layer: 0
   m_Name: Nutrient
   m_TagString: Untagged
@@ -57,7 +58,7 @@ MeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_Materials:
-  - {fileID: 2100000, guid: 3d70a2bd882714f49b9a3b0f7c91457b, type: 2}
+  - {fileID: 2100000, guid: d28657507db47d744931af30fdb1cd4d, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -110,3 +111,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _name: Nutrient
+--- !u!114 &114658284629098470
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1081899501691794}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b7fc99d9e8329ef4cb73b844e2ec820d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _name: 
