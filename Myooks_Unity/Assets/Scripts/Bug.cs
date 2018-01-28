@@ -31,6 +31,7 @@ public class Bug : MonoBehaviour {
 			_eatTimer += Time.deltaTime;
 			if(_eatTimer >= Constants.BUG_EAT_TIME)
 			{
+                //TODO instead, kill the tree if no leaves
 				_targetTree.removeResource<Leaf>();
 				_eatTimer = 0;
 			}

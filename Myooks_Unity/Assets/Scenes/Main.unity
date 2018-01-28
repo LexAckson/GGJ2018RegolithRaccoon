@@ -155,6 +155,51 @@ Prefab:
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: c46dca04641aae64092ae0aa7b4b5d86, type: 2}
   m_IsPrefabParent: 0
+--- !u!1 &542375038
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 542375040}
+  - component: {fileID: 542375039}
+  m_Layer: 0
+  m_Name: BugFactory
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &542375039
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 542375038}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c94cb7f60a9edff43a1c02305985e918, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _trees:
+  - {fileID: 1671364314}
+  - {fileID: 1340363473}
+  _bugsPerDrop: 2
+  _bugPrefab: {fileID: 1299953562135380, guid: 516ac40f8c5c9a04894473ae12981218, type: 2}
+--- !u!4 &542375040
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 542375038}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 2.5591106, y: 29.27, z: 5.2795105}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 7
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &710832263
 Prefab:
   m_ObjectHideFlags: 0
@@ -327,6 +372,12 @@ Prefab:
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 684db2a2627ebac4aac2409b43ed1570, type: 2}
   m_IsPrefabParent: 0
+--- !u!114 &1340363473 stripped
+MonoBehaviour:
+  m_PrefabParentObject: {fileID: 114280366711460264, guid: 684db2a2627ebac4aac2409b43ed1570,
+    type: 2}
+  m_PrefabInternal: {fileID: 1316513913}
+  m_Script: {fileID: 11500000, guid: baee7b43d8391354aad54555f28630d0, type: 3}
 --- !u!1 &1418006278
 GameObject:
   m_ObjectHideFlags: 0
@@ -524,6 +575,12 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &1671364314 stripped
+MonoBehaviour:
+  m_PrefabParentObject: {fileID: 114280366711460264, guid: 684db2a2627ebac4aac2409b43ed1570,
+    type: 2}
+  m_PrefabInternal: {fileID: 710832263}
+  m_Script: {fileID: 11500000, guid: baee7b43d8391354aad54555f28630d0, type: 3}
 --- !u!1001 &1952182491
 Prefab:
   m_ObjectHideFlags: 0
