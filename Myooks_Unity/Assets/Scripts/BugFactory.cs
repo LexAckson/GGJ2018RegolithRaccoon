@@ -10,7 +10,7 @@ public class BugFactory : MonoBehaviour {
 	private float _bugTimer = 0;
 	public int _bugsPerDrop = 2;
 	public GameObject _bugPrefab;
-	private Dictionary<bugColor, List<Bug>> _bugDict;
+	private static Dictionary<bugColor, List<Bug>> _bugDict;
 
 	void Start () 
 	{
@@ -56,13 +56,13 @@ public class BugFactory : MonoBehaviour {
 		return selectedTree;
 	}
 
-	public void killBug(Bug toKill)
+	public static void killBug(Bug toKill)
 	{
 		_bugDict[toKill._color].Remove(toKill);
-		toKill.die();
+		toKill.killBug();
 	}
 
-	public void killAllBugsOfColor(bugColor color)
+	public static void killAllBugsOfColor(bugColor color)
 	{
 		foreach(Bug bug in _bugDict[color])
 			killBug(bug);
