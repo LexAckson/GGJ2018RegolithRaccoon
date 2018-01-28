@@ -50,7 +50,7 @@ public class BugFactory : MonoBehaviour {
 		GreenTree selectedTree = Utility.RandomValue<GreenTree>(_trees);
 		if(selectedTree._color == color && recurseLvl <= 20)
 		{
-			return selectTreeForDrop(toDrop, color, recurseLvl++);
+			return selectTreeForDrop(toDrop, color, ++recurseLvl);
 		}
 
 		return selectedTree;
