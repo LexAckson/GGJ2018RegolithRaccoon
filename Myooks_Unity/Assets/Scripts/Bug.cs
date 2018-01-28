@@ -12,10 +12,12 @@ public class Bug : MonoBehaviour {
 	private bool _isLanded;
 	private Vector3 _startPos;
 	private bool _isInit;
+	private Animator _anim;
 
 	public void Initialize(GreenTree targetTree, bugColor color)
 	{
 		_targetTree = targetTree;
+		_anim = GetComponent<Animator>();
 		_color = color;
 		transform.position = _targetTree.transform.position 
 				+ _targetTree.transform.position.normalized * Constants.BUG_START_DIST;
@@ -41,11 +43,16 @@ public class Bug : MonoBehaviour {
 			_attackTimer+= Time.deltaTime;
 			if(_attackTimer >= Constants.BUG_DIE_TIME)
 			{
-				_isLanded = false;
-				_targetTree.killBug(this);
-				die();
+				killBug();
 			}
 		}
+	}
+
+	void killBug()
+	{
+		_isLanded = false;
+		_targetTree.killBug(this);
+		_anim.SetBool("isDead", true);
 	}
 
 	public void die()
@@ -65,6 +72,7 @@ public class Bug : MonoBehaviour {
 			yield return null;
 		}
 		_isLanded = true;
+		_anim.SetBool("isOnTree", true);
 	}
 
 }

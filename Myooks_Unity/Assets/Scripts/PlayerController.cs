@@ -10,6 +10,7 @@ public class PlayerController : MonoBehaviour {
 	private GameObject _ground;
 	[SerializeField]
 	private GameObject _myceliumPrefab;
+	private Animator _anim;
 
 	private bool _isTouchingTree;
 	private GameObject _currentTree;
@@ -17,26 +18,42 @@ public class PlayerController : MonoBehaviour {
 	private Mycelium _currentThread;
 	private bool _isMycelliumMode;
 	private int _numPins = Constants.NEEDLE_COUNT;
+	private bool _pinDrop;
+	private bool _isFacingClockwise = false;
 
     private void Start()
     {
+		_anim = GetComponent<Animator>();
         _dude = gameObject;
     }
 
     void LateUpdate () {
-		if(Input.GetAxis(Constants.HORIZONTAL_AXIS) < 0)
-			_dude.transform.RotateAround(_ground.transform.position, Vector3.up, -Constants.MOVE_SPEED * Time.deltaTime * (1f + Constants.GROUND_RADIUS - _dude.transform.position.magnitude) );
-	
-		if(Input.GetAxis(Constants.HORIZONTAL_AXIS) > 0)
-			_dude.transform.RotateAround(_ground.transform.position, Vector3.up, Constants.MOVE_SPEED * Time.deltaTime * (1f + Constants.GROUND_RADIUS - _dude.transform.position.magnitude) );
+		if(!_pinDrop)
+		{
+			if(Input.GetAxis(Constants.HORIZONTAL_AXIS) < 0)
+			{
+				_dude.transform.RotateAround(_ground.transform.position, Vector3.up, -Constants.MOVE_SPEED * Time.deltaTime * (1f + Constants.GROUND_RADIUS - _dude.transform.position.magnitude) );
+				if(_isFacingClockwise)
+					changeDirection();
+			}
+			if(Input.GetAxis(Constants.HORIZONTAL_AXIS) > 0)
+			{
+				_dude.transform.RotateAround(_ground.transform.position, Vector3.up, Constants.MOVE_SPEED * Time.deltaTime * (1f + Constants.GROUND_RADIUS - _dude.transform.position.magnitude) );
+				if(!_isFacingClockwise)
+					changeDirection();
+			}
+			Vector3 toCenter = (_dude.transform.position - _ground.transform.position).normalized;
 
-        Vector3 toCenter = (_dude.transform.position - _ground.transform.position).normalized;
+			if (Input.GetAxis(Constants.VERTICAL_AXIS) < 0)
+				_dude.transform.position = Vector3.MoveTowards(_dude.transform.position, Vector3.zero, Constants.MOVE_SPEED * 0.2f * Time.deltaTime);
+			if (Input.GetAxis(Constants.VERTICAL_AXIS) > 0)
+				_dude.transform.position = Vector3.MoveTowards(_dude.transform.position, Vector3.zero, -Constants.MOVE_SPEED * 0.2f * Time.deltaTime);
 
-        if (Input.GetAxis(Constants.VERTICAL_AXIS) < 0)
-            _dude.transform.position = Vector3.MoveTowards(_dude.transform.position, Vector3.zero, Constants.MOVE_SPEED * 0.2f * Time.deltaTime);
-
-        if (Input.GetAxis(Constants.VERTICAL_AXIS) > 0)
-            _dude.transform.position = Vector3.MoveTowards(_dude.transform.position, Vector3.zero, -Constants.MOVE_SPEED * 0.2f * Time.deltaTime);
+			if(Input.GetAxis(Constants.VERTICAL_AXIS) == 0 && Input.GetAxis(Constants.HORIZONTAL_AXIS) == 0)
+				_anim.SetBool("isMoving", false);
+			else
+				_anim.SetBool("isMoving", true);
+		}
 
         //don't go to far to the center
         if (_dude.transform.position.magnitude < 1f)
@@ -49,6 +66,8 @@ public class PlayerController : MonoBehaviour {
         //Droppin lines
         if (_isTouchingTree && Input.GetKeyDown(Constants.PIN_DROP))
 		{
+			_pinDrop = true;
+			_anim.SetBool("isDropPin", _pinDrop);
 			if(!_isMycelliumMode)
 			{
 				_currentThread = Instantiate(_myceliumPrefab, _currentTree.transform).GetComponent<Mycelium>();
@@ -64,7 +83,7 @@ public class PlayerController : MonoBehaviour {
 				_isMycelliumMode = false;
 			}
 
-             if ( _numPins == 0 )
+            if ( _numPins == 0 )
             {
                 //mark the first mycellum in the queue for death and remove it
                 Mycelium myceliumToDie = _myceliumQueue.Dequeue();
@@ -103,5 +122,17 @@ public class PlayerController : MonoBehaviour {
 			_isTouchingTree = false;
 			_currentTree = null;
 		}
+	}
+
+	void dropPinEnd()
+	{
+		_pinDrop = false;
+		_anim.SetBool("isDropPin", _pinDrop);
+	}
+
+	void changeDirection()
+	{
+		_isFacingClockwise = !_isFacingClockwise;
+		transform.Rotate(Vector3.up, 180f, Space.Self);
 	}
 }
