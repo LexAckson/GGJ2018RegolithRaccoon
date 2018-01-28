@@ -10,7 +10,7 @@ public struct leafSprites
 public struct treeAnims
 {
     public bugColor color;
-    public UnityEngine.Animator animator;
+    public UnityEngine.RuntimeAnimatorController animator;
 }
 
 [System.Serializable]

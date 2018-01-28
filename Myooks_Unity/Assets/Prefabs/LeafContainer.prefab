@@ -19,7 +19,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4294837138868554}
-  - component: {fileID: 114681709100868530}
+  - component: {fileID: 114727485456226232}
   m_Layer: 0
   m_Name: LeafContainer
   m_TagString: Untagged
@@ -40,7 +40,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &114681709100868530
+--- !u!114 &114727485456226232
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -48,25 +48,32 @@ MonoBehaviour:
   m_GameObject: {fileID: 1887067757785626}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 82d129da498860849a985887fd3a6586, type: 3}
+  m_Script: {fileID: 11500000, guid: d7c5bad3bcf529043bff348ed154126b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _leafSprites:
-  - color: 0
-    sprites:
-    - {fileID: 21300006, guid: fef0705c6c2407b4397427ddca80d6a2, type: 3}
-    - {fileID: 21300004, guid: fef0705c6c2407b4397427ddca80d6a2, type: 3}
-    - {fileID: 21300002, guid: fef0705c6c2407b4397427ddca80d6a2, type: 3}
-    - {fileID: 21300000, guid: fef0705c6c2407b4397427ddca80d6a2, type: 3}
   - color: 1
     sprites:
     - {fileID: 21300006, guid: b76524d01dcb5e646aba552003d51ad0, type: 3}
     - {fileID: 21300004, guid: b76524d01dcb5e646aba552003d51ad0, type: 3}
     - {fileID: 21300002, guid: b76524d01dcb5e646aba552003d51ad0, type: 3}
     - {fileID: 21300000, guid: b76524d01dcb5e646aba552003d51ad0, type: 3}
+  - color: 0
+    sprites:
+    - {fileID: 21300006, guid: fef0705c6c2407b4397427ddca80d6a2, type: 3}
+    - {fileID: 21300004, guid: fef0705c6c2407b4397427ddca80d6a2, type: 3}
+    - {fileID: 21300002, guid: fef0705c6c2407b4397427ddca80d6a2, type: 3}
+    - {fileID: 21300000, guid: fef0705c6c2407b4397427ddca80d6a2, type: 3}
   - color: 2
     sprites:
     - {fileID: 21300006, guid: c7d8e1abc1b60ed4a9b8cf3db0e7b678, type: 3}
     - {fileID: 21300004, guid: c7d8e1abc1b60ed4a9b8cf3db0e7b678, type: 3}
     - {fileID: 21300002, guid: c7d8e1abc1b60ed4a9b8cf3db0e7b678, type: 3}
     - {fileID: 21300000, guid: c7d8e1abc1b60ed4a9b8cf3db0e7b678, type: 3}
+  _treeAnimators:
+  - color: 0
+    animator: {fileID: 9100000, guid: 8f377619a45c57f45bdb2c257a8bf7c0, type: 2}
+  - color: 1
+    animator: {fileID: 9100000, guid: 90d718698261c954aba2643571e0023b, type: 2}
+  - color: 2
+    animator: {fileID: 9100000, guid: e1c25dc76cf9d61439e64df51d9d7d26, type: 2}

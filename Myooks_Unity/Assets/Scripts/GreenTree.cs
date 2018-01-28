@@ -34,7 +34,7 @@ public class GreenTree : MonoBehaviour {
 			makeResource<Leaf>();
 		}
 		_leafSprite = _allTreeSpriteInfo.getSprite(_color, _resources[typeof(Leaf)].Count);
-		AnimatorOverrideController animatorOverrideController = new AnimatorOverrideController(_allTreeSpriteInfo.getAnimator(_color).runtimeAnimatorController);
+		AnimatorOverrideController animatorOverrideController = new AnimatorOverrideController(_allTreeSpriteInfo.getAnimator(_color));
 		GetComponent<Animator>().runtimeAnimatorController = animatorOverrideController;
 		_bugs = new List<Bug>();
 		StartCoroutine(LeafRegrowCheck());

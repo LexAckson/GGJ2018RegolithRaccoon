@@ -10,11 +10,11 @@ public class TreeSpriteInfo : MonoBehaviour {
 	private treeAnims[] _treeAnimators;
 
 	private Dictionary<bugColor, Sprite[]> _sprites;
-	private Dictionary<bugColor, Animator> _anims;
+	private Dictionary<bugColor, RuntimeAnimatorController> _anims;
 	void Awake () 
 	{
 		_sprites = new Dictionary<bugColor, Sprite[]>();
-		_anims = new Dictionary<bugColor, Animator>();
+		_anims = new Dictionary<bugColor, RuntimeAnimatorController>();
 		foreach(leafSprites spritePair in _leafSprites)
 			_sprites.Add(spritePair.color, spritePair.sprites);
 		foreach(treeAnims tree in _treeAnimators)
@@ -26,7 +26,7 @@ public class TreeSpriteInfo : MonoBehaviour {
 		return _sprites[color][leafNum];
 	}
 
-	public Animator getAnimator(bugColor color)
+	public RuntimeAnimatorController getAnimator(bugColor color)
 	{
 		return _anims[color];
 	}
