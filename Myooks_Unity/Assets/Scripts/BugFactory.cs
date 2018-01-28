@@ -14,6 +14,7 @@ public class BugFactory : MonoBehaviour {
 
 	void Start () 
 	{
+		_bugDict = new Dictionary<bugColor, List<Bug>>();
 		beginBugDrop();
 		Mycelium.OnDestroyBug += killBug;
 		Mycelium.OnDestroyBugColor += killAllBugsOfColor;

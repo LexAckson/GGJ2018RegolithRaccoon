@@ -29,6 +29,7 @@ public class GreenTree : MonoBehaviour {
             _resources[Type.GetType(r.name)] = new Queue<Resource>();
             _resourcePrefabs.Add(r.name, r.stuff);
         }
+		_bugs = new List<Bug>();
 		StartCoroutine(LeafRegrowCheck());
 	}
 	
