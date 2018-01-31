@@ -32,6 +32,7 @@ public class GreenTree : MonoBehaviour {
 	{
 		_activeColor = new List<bugColor>();
 		_resources = new Dictionary<Type , Queue<Resource>>();
+		_treeSounds = GetComponent<AudioSource>();
         _resourcePrefabs = new Dictionary<string, GameObject>();
         foreach(ResourcePrefab r in _resourcePrefabsList) {
             _resources[Type.GetType(r.name)] = new Queue<Resource>();

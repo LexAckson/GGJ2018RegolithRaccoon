@@ -22,6 +22,10 @@ public class Bug : MonoBehaviour {
 	[SerializeField]
 	private AudioClip _bugExplode;
 
+	private void Awake()
+	{
+		_bugSounds = GetComponent<AudioSource>();
+	}
 	public void Initialize(GreenTree targetTree, bugColor color, RuntimeAnimatorController animatorController, Sprite sprite)
 	{
 		_targetTree = targetTree;
@@ -66,15 +70,8 @@ public class Bug : MonoBehaviour {
 		_isDead = true;
 		if(_anim != null)
 			_anim.SetBool("isDead", true);
-		if(isBomb)
-			StartCoroutine(deadBug());
 	}
 
-	IEnumerator deadBug()
-	{
-		yield return new WaitForSeconds(.3f);
-		Destroy(this.gameObject);
-	}
 
 	void die()
 	{

@@ -95,7 +95,7 @@ public class PlayerController : MonoBehaviour {
 
 
         //Droppin lines
-        if (_isTouchingTree && Input.GetKeyDown(Constants.PIN_DROP))
+        if (_isTouchingTree && (Input.GetKeyDown(Constants.PIN_DROP) || Input.GetButtonDown("Fire1")))
 		{
 			_pinDrop = true;
 			_anim.SetBool("isDropPin", _pinDrop);

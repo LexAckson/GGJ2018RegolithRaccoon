@@ -31,6 +31,8 @@ public class TreeSpriteInfo : MonoBehaviour {
 	
 	public Sprite getSprite(bugColor color, int leafNum)
 	{
+		leafNum = Mathf.Max(0, leafNum);
+		leafNum = Mathf.Min(Constants.LEAF_COUNT, leafNum);
 		return _sprites[color][leafNum];
 	}
 
